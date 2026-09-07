@@ -1,0 +1,2554 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agatos Estate — РОП</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* ── Dark theme (default) ── */
+:root {
+  --bg:         #0E0E0D;
+  --surface:    #181716;
+  --raised:     #211F1D;
+  --border:     #2A2826;
+  --border-hi:  #3A3835;
+  --text:       #EDE9E3;
+  --text-2:     #857F78;
+  --text-3:     #4D4A46;
+
+  --hot:        #E04E22;
+  --hot-dim:    rgba(224,78,34,.13);
+  --green:      #18A368;
+  --green-dim:  rgba(24,163,104,.12);
+  --blue:       #2C79CC;
+  --blue-dim:   rgba(44,121,204,.12);
+  --purple:     #7A67EB;
+  --purple-dim: rgba(122,103,235,.12);
+  --teal:       #189690;
+  --teal-dim:   rgba(24,150,144,.12);
+  --red:        #CC3C3C;
+  --red-dim:    rgba(204,60,60,.12);
+  --amber:      #C98B0A;
+  --amber-dim:  rgba(201,139,10,.12);
+  --neutral:    #625E58;
+  --neutral-dim:rgba(98,94,88,.10);
+
+  --r-sm: 8px; --r-md: 10px; --r-lg: 14px;
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg:         #F2F0EC;
+  --surface:    #FFFFFF;
+  --raised:     #F7F5F2;
+  --border:     #E4E1DC;
+  --border-hi:  #C8C4BE;
+  --text:       #1A1816;
+  --text-2:     #706A62;
+  --text-3:     #A39D96;
+
+  --hot:        #D03D10;
+  --hot-dim:    rgba(208,61,16,.10);
+  --green:      #0E8A57;
+  --green-dim:  rgba(14,138,87,.10);
+  --blue:       #1A67B8;
+  --blue-dim:   rgba(26,103,184,.10);
+  --purple:     #5E4DD4;
+  --purple-dim: rgba(94,77,212,.10);
+  --teal:       #0F7D78;
+  --teal-dim:   rgba(15,125,120,.10);
+  --red:        #B82E2E;
+  --red-dim:    rgba(184,46,46,.10);
+  --amber:      #A87008;
+  --amber-dim:  rgba(168,112,8,.10);
+  --neutral:    #7A746D;
+  --neutral-dim:rgba(122,116,109,.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+
+/* ── Topbar ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0 24px; display: flex; align-items: center;
+  justify-content: space-between; height: 50px;
+}
+.brand { display: flex; align-items: center; gap: 9px; }
+.brand-mark {
+  width: 26px; height: 26px; border-radius: 6px; background: var(--hot);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 11px; color: #fff;
+}
+.brand-name { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 13.5px; letter-spacing: -.3px; }
+.brand-sep { color: var(--text-3); margin: 0 2px; }
+.topbar-r { display: flex; align-items: center; gap: 12px; }
+.live-pill {
+  display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-2);
+  background: var(--raised); border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+#ts { font-size: 11px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+.theme-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--raised);
+  color: var(--text-2); font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s, color .15s;
+  line-height: 1;
+}
+.theme-btn:hover { border-color: var(--border-hi); color: var(--text); }
+
+/* ── Tabs ── */
+.tabs {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0 24px; display: flex; gap: 0; overflow-x: auto;
+}
+.tab {
+  padding: 12px 15px; font-size: 12.5px; font-weight: 500;
+  cursor: pointer; border: none; background: none; color: var(--text-2);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  font-family: inherit; white-space: nowrap; transition: color .15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.tab.active { color: var(--text); border-bottom-color: var(--hot); }
+.tab:hover:not(.active) { color: var(--text); }
+.tbadge {
+  font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 99px;
+  background: var(--hot-dim); color: var(--hot); font-variant-numeric: tabular-nums;
+}
+.tbadge.green { background: var(--green-dim); color: var(--green); }
+.tbadge.red   { background: var(--red-dim);   color: var(--red); }
+.tbadge.amber { background: var(--amber-dim); color: var(--amber); }
+.btn-important {
+  flex: 1; padding: 10px 14px; border-radius: var(--r-md); border: 1px solid var(--amber);
+  background: var(--amber-dim); color: var(--amber); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .15s, color .15s;
+}
+.btn-important:hover { background: var(--amber); color: #fff; }
+.btn-important.active { background: var(--amber); color: #fff; }
+
+/* ── Layout ── */
+.content { padding: 20px 24px; max-width: 1300px; margin: 0 auto; }
+.section { display: none; } .section.active { display: block; }
+
+/* ── Metrics ── */
+.metrics { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 18px; }
+.metric {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 13px 15px;
+}
+.metric-lbl { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; margin-bottom: 7px; }
+.metric-val { font-family: 'Manrope', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+.metric-sub { font-size: 10.5px; color: var(--text-3); margin-top: 4px; }
+.mv-hot   { color: var(--hot); }   .mv-green { color: var(--green); }
+.mv-red   { color: var(--red); }   .mv-blue  { color: var(--blue); }
+.mv-amber { color: var(--amber); }
+
+/* ── Sec head ── */
+.sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 11px; }
+.sec-title {
+  font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--text-2);
+  display: flex; align-items: center; gap: 7px;
+}
+.sec-count { font-size: 11px; color: var(--text-3); font-weight: 400; background: var(--raised); padding: 2px 8px; border-radius: 99px; }
+
+/* ── Urgent strip ── */
+.urgent-strip {
+  background: var(--red-dim); border: 1px solid rgba(204,60,60,.22);
+  border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 18px;
+}
+.urgent-head {
+  font-size: 10.5px; font-weight: 700; color: var(--red);
+  text-transform: uppercase; letter-spacing: .08em;
+  display: flex; align-items: center; gap: 6px; margin-bottom: 9px;
+}
+.urgent-items { display: flex; flex-direction: column; gap: 6px; }
+.urgent-row {
+  background: var(--surface); border: 1px solid rgba(204,60,60,.18);
+  border-radius: var(--r-sm); padding: 9px 13px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.u-mgr  { font-size: 11px; font-weight: 700; color: var(--text-2); min-width: 72px; text-transform: uppercase; letter-spacing: .04em; }
+.u-name { font-size: 13px; font-weight: 700; flex: 1; }
+.u-sum  { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 800; color: var(--red); font-variant-numeric: tabular-nums; }
+.u-note { font-size: 11px; color: var(--text-2); flex: 2; min-width: 120px; }
+.u-btn  {
+  font-size: 10.5px; font-weight: 700; color: var(--red);
+  border: 1px solid rgba(204,60,60,.3); padding: 3px 10px; border-radius: 99px; white-space: nowrap;
+}
+
+/* ── Deal cards ── */
+.hot-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap: 8px; margin-bottom: 20px; }
+.deal-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 13px 14px;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.deal-card:hover { border-color: var(--border-hi); background: var(--raised); }
+.deal-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; }
+.dc-orange::before { background: var(--hot); }
+.dc-blue::before   { background: var(--blue); }
+.dc-green::before  { background: var(--green); }
+.dc-teal::before   { background: var(--teal); }
+.dc-purple::before { background: var(--purple); }
+.dc-red::before    { background: var(--red); }
+.dc-amber::before  { background: var(--amber); }
+.dc-gray::before   { background: var(--neutral); }
+
+.dc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.dc-name { font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: -.3px; line-height: 1.2; }
+.dc-mgr  { font-size: 11px; color: var(--text-2); margin-top: 2px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
+.dc-budget { font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 800; white-space: nowrap; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.dc-foot { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.dc-comment { font-size: 11.5px; color: var(--text-2); margin: 7px 0 0; line-height: 1.45; }
+.dc-questions {
+  margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border);
+  display: none;
+}
+.deal-card.expanded .dc-questions { display: block; }
+.dq-title { font-size: 9.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; margin-bottom: 6px; }
+.dq-item { font-size: 11.5px; color: var(--text-2); padding-left: 11px; position: relative; margin-bottom: 4px; line-height: 1.4; }
+.dq-item::before { content: '→'; position: absolute; left: 0; color: var(--text-3); }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: 99px; font-size: 10.5px; font-weight: 600; white-space: nowrap;
+}
+.b-orange { background: var(--hot-dim);    color: var(--hot); }
+.b-blue   { background: var(--blue-dim);   color: var(--blue); }
+.b-green  { background: var(--green-dim);  color: var(--green); }
+.b-teal   { background: var(--teal-dim);   color: var(--teal); }
+.b-purple { background: var(--purple-dim); color: var(--purple); }
+.b-red    { background: var(--red-dim);    color: var(--red); }
+.b-amber  { background: var(--amber-dim);  color: var(--amber); }
+.b-gray   { background: var(--neutral-dim);color: var(--neutral); }
+
+.trigger-chip {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700;
+  background: var(--red-dim); color: var(--red); border: 1px solid rgba(204,60,60,.25);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.55} }
+
+/* ── Trigger manager rows ── */
+.trgmgr-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  cursor: pointer; user-select: none; transition: background .15s;
+}
+.trgmgr-row:hover { background: var(--raised); }
+.trgmgr-count {
+  font-size: 12px; font-weight: 800; color: var(--red);
+  background: var(--red-dim); border-radius: 99px;
+  padding: 2px 9px; white-space: nowrap;
+}
+.trgmgr-arrow { font-size: 14px; color: var(--text-3); transition: transform .2s; flex-shrink:0; }
+.trgmgr-arrow.open { transform: rotate(180deg); }
+.trgmgr-drop {
+  display: none; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  background: var(--raised); overflow: hidden;
+}
+.trgmgr-drop.open { display: flex; }
+.trgmgr-client {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .12s;
+}
+.trgmgr-client:last-child { border-bottom: none; }
+.trgmgr-client:hover { background: var(--surface); }
+
+/* ── Table ── */
+.table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; margin-bottom: 16px; }
+.table-top { padding: 11px 15px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.table-ttl { font-family: 'Manrope', sans-serif; font-size: 12.5px; font-weight: 700; }
+.filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.fbtn { padding: 3px 10px; border: 1px solid var(--border); border-radius: 99px; background: none; font-size: 11px; cursor: pointer; color: var(--text-2); font-family: inherit; transition: all .15s; }
+.fbtn.active { background: var(--hot); color: #fff; border-color: var(--hot); }
+.fbtn:hover:not(.active) { border-color: var(--border-hi); color: var(--text); }
+.tbl-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { padding: 8px 13px; text-align: left; font-size: 10px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; border-bottom: 1px solid var(--border); background: var(--raised); }
+td { padding: 9px 13px; border-bottom: 1px solid var(--border); font-size: 12.5px; vertical-align: middle; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: none; }
+tbody tr { transition: background .1s; cursor: pointer; }
+tbody tr:hover td { background: var(--raised); }
+.td-bold { font-weight: 600; }
+.td-dim  { color: var(--text-2); }
+
+/* ── Manager grid ── */
+.mgr-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 16px; }
+.mgr-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 13px 14px; transition: border-color .15s;
+}
+.mgr-card:hover { border-color: var(--border-hi); }
+.mgr-card.danger  { border-left: 3px solid var(--red); }
+.mgr-card.warning { border-left: 3px solid var(--hot); }
+.mgr-top { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+.ava {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--raised);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-2); flex-shrink: 0;
+}
+.mgr-name { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -.2px; }
+.mgr-sub  { font-size: 10.5px; color: var(--text-2); margin-top: 1px; }
+.mgr-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+.ms { text-align: center; background: var(--raised); border-radius: 7px; padding: 6px 4px; }
+.ms-val { font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.5px; }
+.ms-lbl { font-size: 9px; color: var(--text-3); margin-top: 2px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* ── Funnel ── */
+.funnel-cols { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 16px; }
+.funnel-col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+.funnel-lbl { padding: 8px 11px; font-size: 10.5px; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--border); }
+.funnel-num { font-family: 'Manrope', sans-serif; font-size: 34px; font-weight: 800; text-align: center; padding: 12px 8px 2px; font-variant-numeric: tabular-nums; letter-spacing: -1.5px; }
+.funnel-sub { font-size: 10.5px; color: var(--text-3); text-align: center; padding-bottom: 11px; }
+.fl-n { background: var(--neutral-dim); color: var(--neutral); }  .fn-n { color: var(--neutral); }
+.fl-b { background: var(--blue-dim);    color: var(--blue); }     .fn-b { color: var(--blue); }
+.fl-o { background: var(--hot-dim);     color: var(--hot); }      .fn-o { color: var(--hot); }
+.fl-g { background: var(--green-dim);   color: var(--green); }    .fn-g { color: var(--green); }
+
+/* ── Lost ── */
+.lost-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 16px; }
+.lost-tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; text-align: center; }
+.lost-val { font-family: 'Manrope', sans-serif; font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+.lost-lbl { font-size: 11px; color: var(--text-2); margin-top: 5px; }
+.reason-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; }
+.reason-row { display: flex; align-items: center; gap: 11px; margin-bottom: 8px; }
+.reason-row:last-child { margin-bottom: 0; }
+.reason-lbl { font-size: 12px; width: 175px; flex-shrink: 0; }
+.reason-track { flex: 1; background: var(--raised); border-radius: 99px; height: 5px; overflow: hidden; }
+.reason-fill { height: 100%; border-radius: 99px; background: var(--red); }
+.reason-n { font-size: 11px; color: var(--text-2); width: 20px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ── Add client button ── */
+.btn-add-client {
+  margin-left: auto;
+  padding: 7px 16px; border-radius: var(--r-sm);
+  border: none; background: var(--hot); color: #fff;
+  font-family: inherit; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: opacity .15s; white-space: nowrap; flex-shrink: 0;
+}
+.btn-add-client:hover { opacity: .85; }
+
+/* ── CRM lookup block ── */
+.crm-lookup {
+  background: var(--raised); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 14px;
+  margin-bottom: 14px;
+}
+.crm-lookup-title {
+  font-size: 10px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px;
+}
+.crm-lookup-row { display: flex; gap: 8px; }
+.crm-lookup-input {
+  flex: 1; padding: 8px 11px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-sm); font-size: 13px; color: var(--text);
+  font-family: inherit; outline: none; transition: border-color .15s;
+}
+.crm-lookup-input:focus { border-color: var(--hot); }
+.crm-lookup-btn {
+  padding: 8px 14px; border-radius: var(--r-sm); border: none;
+  background: var(--blue); color: #fff; font-family: inherit;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: opacity .15s; display: flex;
+  align-items: center; gap: 6px;
+}
+.crm-lookup-btn:hover { opacity: .85; }
+.crm-lookup-btn:disabled { opacity: .5; cursor: not-allowed; }
+.crm-result {
+  margin-top: 10px; padding: 10px 12px;
+  border-radius: var(--r-sm); font-size: 12px;
+  display: none;
+}
+.crm-result.found { background: var(--green-dim); border: 1px solid rgba(24,163,104,.25); color: var(--green); display: block; }
+.crm-result.not-found { background: var(--amber-dim); border: 1px solid rgba(201,139,10,.25); color: var(--amber); display: block; }
+.crm-result.error { background: var(--red-dim); border: 1px solid rgba(204,60,60,.25); color: var(--red); display: block; }
+
+/* ── Empty ── */
+.empty { text-align: center; padding: 48px; color: var(--text-3); font-size: 13px; }
+.empty-icon { font-size: 28px; margin-bottom: 10px; }
+
+/* ── Drawer overlay ── */
+.drawer-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 200; opacity: 0; pointer-events: none;
+  transition: opacity .22s ease;
+}
+.drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ── Drawer panel ── */
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 480px; max-width: 100vw;
+  background: var(--surface); border-left: 1px solid var(--border);
+  z-index: 201; display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  box-shadow: -8px 0 32px rgba(0,0,0,.25);
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-head {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.drawer-title {
+  font-family: 'Manrope', sans-serif; font-size: 14px;
+  font-weight: 700; letter-spacing: -.3px;
+}
+.drawer-close {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--raised);
+  color: var(--text-2); font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s; line-height: 1;
+}
+.drawer-close:hover { border-color: var(--border-hi); color: var(--text); }
+
+.drawer-body {
+  flex: 1; overflow-y: auto; padding: 20px;
+}
+.drawer-footer {
+  padding: 14px 20px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px; flex-shrink: 0;
+}
+
+/* ── Stage accent bar on drawer ── */
+.drawer-stage-bar {
+  height: 3px; flex-shrink: 0;
+  transition: background .2s;
+}
+
+/* ── Form fields ── */
+.field { margin-bottom: 14px; }
+.field-label {
+  font-size: 10.5px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 5px; display: block;
+}
+.field-input, .field-select, .field-textarea {
+  width: 100%; padding: 8px 11px;
+  background: var(--raised); border: 1px solid var(--border);
+  border-radius: var(--r-sm); font-size: 13px; color: var(--text);
+  font-family: inherit; outline: none;
+  transition: border-color .15s;
+  appearance: none; -webkit-appearance: none;
+}
+.field-input:focus, .field-select:focus, .field-textarea:focus {
+  border-color: var(--hot);
+}
+.field-textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+.field-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* Stage select colour indicator */
+.stage-preview {
+  display: flex; align-items: center; gap: 8px; margin-top: 8px;
+  padding: 8px 11px; border-radius: var(--r-sm);
+  border: 1px solid var(--border); font-size: 12px;
+  transition: background .2s, border-color .2s;
+}
+.stage-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; transition: background .2s; }
+
+/* Questions block */
+.questions-block {
+  background: var(--raised); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 14px;
+}
+.questions-block-title {
+  font-size: 10px; font-weight: 700; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 9px;
+}
+.q-item {
+  font-size: 12px; color: var(--text-2); padding-left: 12px;
+  position: relative; margin-bottom: 6px; line-height: 1.45;
+}
+.q-item:last-child { margin-bottom: 0; }
+.q-item::before { content: '→'; position: absolute; left: 0; color: var(--text-3); }
+
+/* Priority selector */
+.prio-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
+.prio-opt {
+  padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: var(--r-sm); cursor: pointer;
+  font-size: 11.5px; font-weight: 500; color: var(--text-2);
+  display: flex; align-items: center; gap: 7px;
+  transition: all .15s; background: var(--raised);
+}
+.prio-opt.selected { border-color: var(--hot); color: var(--text); background: var(--hot-dim); }
+.prio-dot-sm { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Status selector */
+.status-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
+.status-opt {
+  padding: 7px 10px; border: 1px solid var(--border);
+  border-radius: var(--r-sm); cursor: pointer;
+  font-size: 11.5px; font-weight: 500; color: var(--text-2);
+  display: flex; align-items: center; gap: 7px;
+  transition: all .15s; background: var(--raised);
+}
+.status-opt.selected {
+  border-color: var(--sc, var(--hot));
+  color: var(--text);
+  background: color-mix(in srgb, var(--sc, var(--hot)) 12%, transparent);
+}
+.status-dot-sm { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Action buttons */
+.btn-save {
+  flex: 1; padding: 10px; border-radius: var(--r-sm);
+  border: none; font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; background: var(--hot); color: #fff;
+  transition: opacity .15s;
+}
+.btn-save:hover { opacity: .88; }
+.btn-lost {
+  padding: 10px 16px; border-radius: var(--r-sm);
+  border: 1px solid rgba(204,60,60,.35); background: var(--red-dim);
+  color: var(--red); font-family: inherit; font-size: 12.5px;
+  font-weight: 600; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn-lost:hover { background: var(--red); color: #fff; }
+.btn-close-deal {
+  flex: 1; padding: 10px 14px; border-radius: var(--r-md); border: 1px solid var(--green);
+  background: var(--green-dim); color: var(--green); font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .15s, color .15s;
+}
+.btn-close-deal:hover { background: var(--green); color: #fff; }
+
+/* Divider */
+.drawer-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+.deal-result-block { background: var(--green-dim); border: 1px solid rgba(24,163,104,.25); border-radius: var(--r-md); padding: 14px; margin-bottom: 4px; }
+
+/* Save toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(10px);
+  background: var(--text); color: var(--bg);
+  padding: 9px 18px; border-radius: 99px; font-size: 12.5px; font-weight: 600;
+  z-index: 300; opacity: 0; transition: all .2s; pointer-events: none; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Search bar ── */
+.search-bar {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.search-input {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 7px 12px; font-size: 12.5px;
+  color: var(--text); font-family: inherit; outline: none;
+  width: 220px; transition: border-color .15s;
+}
+.search-input::placeholder { color: var(--text-3); }
+.search-input:focus { border-color: var(--border-hi); }
+
+/* ── Responsive ── */
+@media (max-width: 1000px) { .mgr-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 700px) {
+  .metrics { grid-template-columns: repeat(2,1fr); }
+  .mgr-grid { grid-template-columns: repeat(2,1fr); }
+  .funnel-cols { grid-template-columns: repeat(2,1fr); }
+  .content { padding: 14px; }
+  .topbar, .tabs { padding-left: 14px; padding-right: 14px; }
+}
+
+/* ── Analytics modal ── */
+.an-periods { display:flex; gap:6px; margin:14px 0 18px; }
+.an-period {
+  padding: 6px 16px; border-radius: 99px; border: 1px solid var(--border);
+  background: var(--raised); color: var(--text-2); font-family: inherit;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.an-period.active, .mgr-period-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.an-period:hover:not(.active), .mgr-period-btn:hover:not(.active) { border-color: var(--border-hi); color: var(--text); }
+.mgr-period-btn { font-size: 12px; padding: 5px 13px; border-radius: 99px; border: 1px solid var(--border); background: var(--raised); color: var(--text-2); cursor: pointer; font-family: inherit; transition: all .15s; }
+.an-subtitle { font-size: 12px; color: var(--text-2); margin-bottom: 14px; }
+.an-header-row, .an-row {
+  display: grid; grid-template-columns: 130px 1fr 44px 44px 60px;
+  align-items: center; gap: 10px; padding: 6px 0;
+}
+.an-header-row { margin-bottom: 4px; }
+.an-row { border-bottom: 1px solid var(--border); }
+.an-row:last-child { border-bottom: none; }
+.an-stage-lbl { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.an-bar-wrap { height: 6px; background: var(--raised); border-radius: 99px; overflow: hidden; }
+.an-bar { height: 100%; background: var(--blue); border-radius: 99px; transition: width .4s ease; }
+.an-cnt { text-align: right; font-size: 13px; font-weight: 800; font-family: 'Manrope',sans-serif; }
+.an-pct { text-align: right; font-size: 11px; color: var(--text-2); }
+.an-conv { text-align: center; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 99px; }
+.an-conv.good { background: rgba(24,163,104,.15); color: var(--green); }
+.an-conv.mid  { background: rgba(201,139,10,.15);  color: var(--amber); }
+.an-conv.bad  { background: rgba(204,60,60,.12);   color: var(--red); }
+.an-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+.an-summary { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.an-sum-item { text-align: center; padding: 10px 8px; background: var(--raised); border-radius: var(--r-sm); }
+.an-sum-val { font-size: 22px; font-weight: 900; font-family: 'Manrope',sans-serif; }
+.an-sum-lbl { font-size: 10.5px; color: var(--text-2); margin-top: 4px; line-height: 1.3; }
+.an-drop { text-align: center; }
+/* ── Lost history modal ── */
+.lh-meta { background: var(--raised); border-radius: var(--r-sm); padding: 12px 14px; margin: 14px 0 18px; }
+.lh-meta-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border); }
+.lh-meta-row:last-child { border-bottom: none; }
+.lh-meta-lbl { font-size: 11.5px; color: var(--text-2); }
+.lh-meta-val { font-size: 12px; font-weight: 700; }
+.lh-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); margin-bottom: 10px; }
+.lh-note { font-size: 11px; color: var(--amber); background: rgba(201,139,10,.1); border-radius: var(--r-sm); padding: 7px 10px; margin-bottom: 14px; }
+.lh-timeline { display: flex; flex-direction: column; }
+.lh-step { display: flex; gap: 12px; }
+.lh-step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.lh-dot {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.lh-line { width: 2px; flex: 1; min-height: 16px; background: var(--border); margin: 2px 0; }
+.lh-step-body { padding: 2px 0 14px; }
+.lh-step-title { font-size: 13px; font-weight: 600; }
+.lh-step-meta { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.lh-step-sub { font-size: 11px; margin-top: 2px; }
+.lh-step-comment { font-size: 12px; color: var(--text-2); background: var(--raised); border-left: 2px solid var(--border-hi); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 7px 10px; margin-top: 6px; line-height: 1.5; }
+.lh-step-lost .lh-step-title { font-weight: 800; }
+.lh-comment-box {
+  background: var(--raised); border-left: 3px solid var(--red);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 10px 14px;
+  font-size: 13px; color: var(--text-2); line-height: 1.5;
+}
+
+.drop-chip {
+  display: inline-block; padding: 2px 7px; border-radius: 99px;
+  font-size: 10.5px; font-weight: 700;
+  background: rgba(204,60,60,.12); color: var(--red);
+}
+
+/* ── Stage metrics strip ── */
+.stage-metrics {
+  display: flex; align-items: center; gap: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 10px 16px;
+  margin-bottom: 14px; overflow-x: auto; flex-wrap: nowrap;
+}
+.sm-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 4px 10px; border-radius: var(--r-sm);
+  flex-shrink: 0; cursor: default;
+}
+.sm-item-green .sm-val { color: var(--green); }
+.sm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sm-lbl { font-size: 11px; color: var(--text-2); white-space: nowrap; }
+.sm-val { font-size: 15px; font-weight: 800; font-family: 'Manrope', sans-serif; margin-left: 2px; }
+.sm-sep { font-size: 12px; color: var(--text-3); padding: 0 2px; flex-shrink: 0; }
+
+/* ── Leaderboard table ── */
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table thead th {
+  padding: 10px 12px; font-size: 10.5px; font-weight: 700;
+  color: var(--text-3); text-transform: uppercase; letter-spacing: .05em;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.lb-row { border-bottom: 1px solid var(--border); transition: background .12s; }
+.lb-row:last-child { border-bottom: none; }
+.lb-row:hover { background: var(--raised); }
+.lb-row.lb-danger { background: rgba(204,60,60,.05); }
+.lb-row.lb-danger:hover { background: rgba(204,60,60,.09); }
+.lb-rank { text-align: center; padding: 12px 10px; font-size: 18px; width: 48px; }
+.rank-num { display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%; background: var(--raised);
+  font-size: 11px; font-weight: 800; color: var(--text-2); border: 1px solid var(--border); }
+.lb-mgr { display: flex; align-items: center; gap: 10px; padding: 10px 8px; }
+.lb-ava { width: 32px; height: 32px; border-radius: 50%; background: var(--raised);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: var(--text-2); flex-shrink: 0; }
+.lb-name { font-size: 13px; font-weight: 700; }
+.lb-sub { font-size: 11px; color: var(--text-3); }
+.lb-num { text-align: center; padding: 10px 8px; white-space: nowrap; }
+.lb-zero { color: var(--text-3); font-size: 13px; }
+.lb-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 26px; padding: 2px 8px; border-radius: 99px;
+  font-size: 12px; font-weight: 800;
+}
+.lb-chip.hot     { background: rgba(224,78,34,.15); color: var(--hot); }
+.lb-chip.bron    { background: rgba(25,150,144,.15); color: var(--teal); }
+.lb-chip.docs    { background: rgba(44,121,204,.15); color: var(--blue); }
+.lb-chip.deal    { background: rgba(24,163,104,.2);  color: var(--green); }
+.lb-chip.closed  { background: rgba(24,163,104,.3);  color: var(--green); font-size: 13px; }
+.lb-chip.trigger { background: var(--red-dim);        color: var(--red); animation: blink 2s ease-in-out infinite; }
+.lb-action { width: 36px; padding-right: 8px; }
+.rank-move {
+  display: inline-block; font-size: 9.5px; font-weight: 800;
+  padding: 1px 5px; border-radius: 99px; letter-spacing: .02em;
+}
+.rank-move.up   { background: rgba(24,163,104,.18); color: var(--green); }
+.rank-move.down { background: rgba(204,60,60,.15);  color: var(--red); }
+.rank-move.same { background: var(--raised); color: var(--text-3); font-weight: 600; }
+.rank-move.new  { background: rgba(44,121,204,.15); color: var(--blue); }
+
+/* ── Manager delete btn ── */
+.mgr-delete-btn {
+  opacity: 0; pointer-events: none;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-3); font-size: 13px; padding: 4px 6px;
+  border-radius: var(--r-sm); transition: opacity .15s, color .15s, background .15s;
+  flex-shrink: 0;
+}
+.mgr-card:hover .mgr-delete-btn { opacity: 1; pointer-events: auto; }
+.mgr-delete-btn:hover { color: var(--red); background: var(--red-dim); }
+
+/* ── Date/time pickers ── */
+input[type="date"], input[type="time"] {
+  color-scheme: dark;
+  cursor: pointer;
+}
+[data-theme="light"] input[type="date"],
+[data-theme="light"] input[type="time"] {
+  color-scheme: light;
+}
+
+/* ── Lost modal ── */
+.lost-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(3px);
+  align-items: center; justify-content: center;
+}
+.lost-modal-overlay.open { display: flex; }
+.lost-modal-box {
+  background: var(--surface); border: 1px solid var(--border-hi);
+  border-radius: var(--r-md); padding: 24px; width: 100%; max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.lost-modal-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;
+}
+.lost-modal-title { font-size: 15px; font-weight: 800; color: var(--red); }
+.lost-modal-client { font-size: 13px; color: var(--text-2); margin-bottom: 18px; }
+.lost-modal-label { font-size: 11px; font-weight: 700; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+.lost-reasons-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px;
+}
+.lost-reason-opt {
+  padding: 9px 12px; border-radius: var(--r-sm);
+  border: 1px solid var(--border); background: var(--raised);
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.lost-reason-opt:hover { border-color: var(--border-hi); background: var(--bg); }
+.lost-reason-opt.selected { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+.lost-reason-err { font-size: 11px; color: var(--red); margin-top: 4px; }
+.lost-modal-footer {
+  display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px;
+}
+.lost-modal-cancel {
+  padding: 9px 18px; border-radius: var(--r-sm); border: 1px solid var(--border);
+  background: transparent; color: var(--text-2); font-family: inherit;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.lost-modal-cancel:hover { background: var(--raised); }
+.lost-modal-confirm {
+  padding: 9px 18px; border-radius: var(--r-sm); border: none;
+  background: var(--red); color: #fff; font-family: inherit;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.lost-modal-confirm:hover { opacity: .88; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">AE</div>
+    <span class="brand-name">Agatos Estate</span>
+    <span class="brand-sep">·</span>
+    <span style="font-size:12px;color:var(--text-2)">РОП</span>
+  </div>
+  <div class="topbar-r">
+    <div class="live-pill"><span class="live-dot"></span>Live</div>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" title="Сменить тему">☀</button>
+    <span id="ts">01.09.2026</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('clients')">Все клиенты <span class="tbadge green" id="b-all">0</span></button>
+  <button class="tab" onclick="switchTab('hot')">Горячие <span class="tbadge" id="b-hot">0</span></button>
+  <button class="tab" onclick="switchTab('important')">⚡ Важные <span class="tbadge amber" id="b-important">0</span></button>
+  <button class="tab" onclick="switchTab('trigger')">🚨 Триггер <span class="tbadge red" id="b-trigger">0</span></button>
+  <button class="tab" onclick="switchTab('managers')">Менеджеры</button>
+  <button class="tab" onclick="switchTab('lost')">Потерянные <span class="tbadge red" id="b-lost">0</span></button>
+  <button class="tab" onclick="switchTab('closed')">✅ Закрытые <span class="tbadge green" id="b-closed">0</span></button>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-stage-bar" id="drawer-bar"></div>
+  <div class="drawer-head">
+    <div class="drawer-title" id="drawer-title">Карточка клиента</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+  <div class="drawer-footer">
+    <button class="btn-lost" onclick="markLost()">Клиент отвалился</button>
+    <button class="btn-important" id="btn-important" onclick="toggleImportant()">⚡ Важный</button>
+    <button class="btn-close-deal" id="btn-close-deal" onclick="closeDeal()" style="display:none">✅ Закрыть сделку</button>
+    <button class="btn-save" id="btn-save" onclick="saveClient()">Сохранить</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="content">
+  <div class="section active" id="tab-clients"></div>
+  <div class="section" id="tab-hot"></div>
+  <div class="section" id="tab-important"></div>
+  <div class="section" id="tab-trigger"></div>
+  <div class="section" id="tab-managers"></div>
+  <div class="section" id="tab-lost"></div>
+  <div class="section" id="tab-closed"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   ДАННЫЕ — реальные из Google Таблицы
+══════════════════════════════════════════ */
+let CLIENTS = [];
+let LOST = [];
+
+/* ─── Конфиг этапов ─── */
+const STAGE = {
+  "Вызваниваем":           { cls:"b-red",    dc:"dc-red",    short:"Вызваниваем" },
+  "Зум":                   { cls:"b-teal",   dc:"dc-teal",   short:"Зум" },
+  "Показ объекта":         { cls:"b-gray",   dc:"dc-gray",   short:"Показ" },
+  "Согласование условий":  { cls:"b-blue",   dc:"dc-blue",   short:"Согласование" },
+  "Одобрение ипотеки":     { cls:"b-blue",   dc:"dc-blue",   short:"Ипотека" },
+  "Трейд-ин":              { cls:"b-purple", dc:"dc-purple", short:"Трейд-ин" },
+  "Бронь оплачена":        { cls:"b-orange", dc:"dc-orange", short:"Бронь" },
+  "Подготовка документов": { cls:"b-orange", dc:"dc-orange", short:"Документы" },
+  "Ждём лот":              { cls:"b-gray",   dc:"dc-gray",   short:"Ждём лот" },
+  "Выход на сделку":       { cls:"b-orange", dc:"dc-orange", short:"Выход на сделку" },
+  "Закрытая сделка":       { cls:"b-green",  dc:"dc-green",  short:"Закрыта" },
+};
+
+const HOT_STAGES = new Set(["Зум","Согласование условий","Одобрение ипотеки","Трейд-ин","Продаёт своё","Бронь оплачена","Подготовка документов","Выход на сделку","Закрытая сделка"]);
+
+const STAGE_QS = {
+  "Вызваниваем":          ["Сколько попыток и через какие каналы?","Пробовал звонить с другого номера?","Нужна помощь РОПа или передать другому?"],
+  "Зум":                  ["Готов закрыть оставшиеся возражения?","Какой следующий шаг планируется прямо на зуме?","После зума сразу отправит резюме договорённостей?"],
+  "Согласование условий": ["Что конкретно стопорит — цена, условия, юридика?","Клиент знает дедлайн — когда оффер перестаёт действовать?","Нужен совместный звонок РОПа с клиентом?"],
+  "Бронь оплачена":       ["Дата выхода на сделку согласована с застройщиком?","Чеклист документов отправлен клиенту?","Есть риски срыва — юридические, финансовые?"],
+  "Выход на сделку":      ["Все документы с обеих сторон проверены?","Клиент подтвердил что придёт — нет сомнений?","Менеджер будет на связи весь день сделки?"],
+  "Подготовка документов":["Что ещё не готово — какие сроки?","Дата сделки подтверждена с обеих сторон?","Нотариус / банк / регпалата готовы?"],
+};
+
+/* ─── Helpers ─── */
+function isTrigger(c) {
+  return c.stage === "Вызваниваем" && c.prio === "СРОЧНО";
+}
+function stageBadge(s) {
+  const cfg = STAGE[s];
+  return `<span class="badge ${cfg ? cfg.cls : 'b-gray'}">${s || '—'}</span>`;
+}
+function fmt(n) { return n ? n.toFixed(0) + ' млн' : '—'; }
+
+function daysSince(dateStr) {
+  if (!dateStr) return null;
+  const [d,m,y] = dateStr.split('.').map(Number);
+  const diff = Math.floor((new Date(2026,8,4) - new Date(y,m-1,d)) / 86400000);
+  return diff >= 0 ? diff : 0;
+}
+
+/* ─── State ─── */
+let currentTab = 'clients';
+let clientFilter = 'Все';
+let mgrFilter = 'Все';
+let searchQ = '';
+let prevMgrRank = {};
+let mgrTableDays = null; // null = всё время
+
+/* ─── Tab switch ─── */
+function switchTab(t) {
+  currentTab = t;
+  const TAB_ORDER = ['clients','hot','important','trigger','managers','lost','closed'];
+  document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active', TAB_ORDER[i] === t));
+  document.querySelectorAll('.section').forEach((el,i) => el.classList.toggle('active', TAB_ORDER[i] === t));
+  render();
+}
+
+function render() {
+  const map = { hot: renderHot, clients: renderClients, managers: renderManagers, lost: renderLost, trigger: renderTrigger, closed: renderClosed, important: renderImportant };
+  if (map[currentTab]) map[currentTab]();
+}
+
+/* ─── Update badges ─── */
+function updateBadges() {
+  const hot = CLIENTS.filter(c => HOT_STAGES.has(c.stage)).length;
+  const trg = CLIENTS.filter(isTrigger).length;
+  document.getElementById('b-hot').textContent = hot;
+  document.getElementById('b-trigger').textContent = trg;
+  document.getElementById('b-all').textContent = CLIENTS.length;
+  document.getElementById('b-lost').textContent = LOST.length;
+  document.getElementById('b-closed').textContent = CLOSED.length;
+  document.getElementById('b-important').textContent = CLIENTS.filter(c => c.important).length;
+}
+
+/* ─── HOT TAB ─── */
+function renderHot() {
+  const triggers = CLIENTS.filter(isTrigger);
+  const hot = CLIENTS.filter(c => HOT_STAGES.has(c.stage));
+  const totalSum = CLIENTS.reduce((s,c) => s + (c.sum||0), 0);
+  const hotSum = hot.reduce((s,c) => s + (c.sum||0), 0);
+
+  const stageOrder = ["Выход на сделку","Бронь оплачена","Подготовка документов","Согласование условий","Одобрение ипотеки","Трейд-ин","Зум"];
+  const sorted = hot.map((c,_) => ({c, idx: CLIENTS.indexOf(c)}))
+    .sort((a,b) => (stageOrder.indexOf(a.c.stage)+99)-(stageOrder.indexOf(b.c.stage)+99));
+
+  const metricsHtml = '';
+
+  const cardsHtml = sorted.map(({c, idx}) => dealCard(c, idx)).join('');
+
+  document.getElementById('tab-hot').innerHTML = metricsHtml + `
+    <div class="sec-head">
+      <div class="sec-title">Горячие сделки <span class="sec-count">${sorted.length} клиентов · ${fmt(hotSum)}</span></div>
+    </div>
+    <div class="hot-grid">${cardsHtml || '<div class="empty"><div class="empty-icon">🎯</div>Нет горячих сделок</div>'}</div>`;
+}
+
+function dealCard(c, idx) {
+  const cfg = STAGE[c.stage] || { cls:'b-gray', dc:'dc-gray' };
+  const days = daysSince(c.stageStart);
+  const trigger = isTrigger(c);
+  const isHuge = c.sum >= 100;
+
+  return `
+  <div class="deal-card ${cfg.dc}" onclick="openDrawer(${idx})">
+    <div class="dc-top">
+      <div>
+        <div class="dc-name">${c.name}${isHuge ? ' <span style="color:var(--amber);font-size:11px">★</span>' : ''}</div>
+        <div class="dc-mgr">${c.mgr}</div>
+      </div>
+      <div class="dc-budget" style="color:${isHuge?'var(--amber)':'var(--text)'}">${c.sum ? c.sum+'млн' : '—'}</div>
+    </div>
+    <div class="dc-foot">
+      <span class="badge ${cfg.cls}">${c.stage}</span>
+      ${trigger ? '<span class="trigger-chip">🚨 ПЕРЕДАТЬ</span>' : ''}
+      ${days !== null ? `<span style="font-size:10.5px;color:var(--text-3)">${days} дн.</span>` : ''}
+      ${c.obj && c.obj !== '?' ? `<span style="font-size:10.5px;color:var(--text-3)">· ${c.obj}</span>` : ''}
+    </div>
+    ${c.dealDate ? `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);font-weight:600;margin-top:6px">📅 Сделка: ${c.dealDate.split('-').reverse().join('.')}</div>` : ''}
+    ${c.comment ? `<div class="dc-comment">${c.comment}</div>` : ''}
+  </div>`;
+}
+
+/* ─── TRIGGER TAB ─── */
+function renderTrigger() {
+  const triggered = CLIENTS.map((c,i) => ({...c, _idx:i})).filter(c => isTrigger(c));
+  const totalSum = triggered.reduce((s,c) => s + (c.sum||0), 0);
+  const byMgr = {};
+  triggered.forEach(c => { if (!byMgr[c.mgr]) byMgr[c.mgr] = []; byMgr[c.mgr].push(c); });
+
+  const cards = triggered.length === 0
+    ? `<div class="empty"><div class="empty-icon">✅</div>Нет клиентов с сработавшим триггером</div>`
+    : triggered.map(c => {
+        const days = daysSince(c.stageStart);
+        return `
+        <div class="deal-card dc-red" onclick="openDrawer(${c._idx})">
+          <div class="dc-top">
+            <div>
+              <div class="dc-name">${c.name}</div>
+              <div class="dc-mgr">${c.mgr}</div>
+            </div>
+            <div class="dc-budget">${c.sum ? c.sum+'млн' : '—'}</div>
+          </div>
+          <div class="dc-foot">
+            <span class="trigger-chip">🚨 Триггер</span>
+            ${days !== null ? `<span style="font-size:11px;font-weight:700;color:var(--red)">${days} дн. без контакта</span>` : ''}
+            ${c.obj && c.obj !== '?' ? `<span style="font-size:10.5px;color:var(--text-3)">· ${c.obj}</span>` : ''}
+          </div>
+          ${c.comment ? `<div class="dc-comment">${c.comment}</div>` : ''}
+        </div>`;
+      }).join('');
+
+  document.getElementById('tab-trigger').innerHTML = `
+  <div class="sec-head" style="margin-bottom:14px">
+    <div class="sec-title">🚨 Триггер <span class="sec-count">${triggered.length} клиентов · ${fmt(totalSum)}</span></div>
+  </div>
+  <div class="hot-grid">${cards}</div>`;
+}
+
+function confirmDeleteManager(name) {
+  const clientCount = CLIENTS.filter(c => c.mgr === name).length;
+  const msg = clientCount > 0
+    ? `Удалить менеджера ${name}? У него ${clientCount} клиент(ов) — они останутся без менеджера.`
+    : `Удалить менеджера ${name}?`;
+  if (!confirm(msg)) return;
+  const idx = MANAGERS.indexOf(name);
+  if (idx !== -1) MANAGERS.splice(idx, 1);
+  saveToServer();
+  render();
+  showToast(`Менеджер ${name} удалён`);
+}
+
+/* ─── Аналитика периода ─── */
+let analyticsDays = 3;
+
+function parseDate(str) {
+  if (!str) return null;
+  // дд.мм.гггг
+  const p = str.split('.');
+  if (p.length === 3) return new Date(+p[2], +p[1]-1, +p[0]);
+  // yyyy-mm-dd (из <input type=date>)
+  const d = new Date(str);
+  return isNaN(d) ? null : d;
+}
+
+function openAnalyticsModal() {
+  document.getElementById('analytics-modal').classList.add('open');
+  renderAnalytics();
+}
+
+function closeAnalyticsModal() {
+  document.getElementById('analytics-modal').classList.remove('open');
+}
+
+function setAnalyticsPeriod(days, btn) {
+  analyticsDays = days;
+  document.querySelectorAll('.an-period').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAnalytics();
+}
+
+function renderAnalytics() {
+  const now = new Date();
+  const cutoff = analyticsDays > 0 ? new Date(now - analyticsDays * 86400000) : null;
+
+  const inPeriod = c => {
+    if (!cutoff) return true;
+    const d = parseDate(c.stageStart);
+    return d && d >= cutoff;
+  };
+
+  const FUNNEL = [
+    { label: 'Показ / Зум',    stages: ['Показ объекта','Зум'] },
+    { label: 'Вызваниваем',    stages: ['Вызваниваем'] },
+    { label: 'Согласование',   stages: ['Согласование условий','Одобрение ипотеки','Трейд-ин','Продаёт своё'] },
+    { label: 'Бронь',          stages: ['Бронь оплачена'] },
+    { label: 'Документы',      stages: ['Подготовка документов'] },
+    { label: 'К сделке',       stages: ['Выход на сделку','Закрытая сделка'] },
+  ];
+
+  const periodClients = CLIENTS.filter(inPeriod);
+  const lostPeriod = LOST.filter(c => {
+    if (!cutoff) return true;
+    const d = parseDate(c.date);
+    return d && d >= cutoff;
+  });
+
+  const counts = FUNNEL.map(g => ({
+    ...g,
+    cnt: periodClients.filter(c => g.stages.includes(c.stage)).length,
+    sum: periodClients.filter(c => g.stages.includes(c.stage)).reduce((s,c) => s+(c.sum||0), 0),
+  }));
+
+  const total = counts.reduce((s,g) => s + g.cnt, 0);
+  const maxCnt = Math.max(1, ...counts.map(g => g.cnt));
+
+  const periodLabel = analyticsDays === 0 ? 'всё время'
+    : analyticsDays === 3 ? 'последние 3 дня'
+    : analyticsDays === 7 ? 'последние 7 дней' : 'последние 30 дней';
+
+  const funnelRows = counts.map((g, i) => {
+    const pct = total > 0 ? Math.round(g.cnt / total * 100) : 0;
+    const bar = Math.round(g.cnt / maxCnt * 100);
+    const conv = i > 0 && counts[i-1].cnt > 0
+      ? Math.round(g.cnt / counts[i-1].cnt * 100) : null;
+    return `
+    <div class="an-row">
+      <div class="an-stage-lbl">${g.label}</div>
+      <div class="an-bar-wrap">
+        <div class="an-bar" style="width:${bar}%"></div>
+      </div>
+      <div class="an-cnt">${g.cnt}</div>
+      <div class="an-pct">${pct}%</div>
+      ${conv !== null
+        ? `<div class="an-conv ${conv >= 50 ? 'good' : conv >= 25 ? 'mid' : 'bad'}">→ ${conv}%</div>`
+        : `<div class="an-conv"></div>`}
+    </div>`;
+  }).join('');
+
+  const dropPct = (total + lostPeriod.length) > 0
+    ? Math.round(lostPeriod.length / (total + lostPeriod.length) * 100) : 0;
+
+  document.getElementById('analytics-body').innerHTML = `
+  <div class="an-subtitle">Клиенты, вошедшие в этап за период: <strong>${periodLabel}</strong></div>
+  <div class="an-header-row">
+    <div class="an-stage-lbl" style="color:var(--text-3);font-size:10px">ЭТАП</div>
+    <div class="an-bar-wrap"></div>
+    <div class="an-cnt" style="color:var(--text-3);font-size:10px">КОЛ.</div>
+    <div class="an-pct" style="color:var(--text-3);font-size:10px">ДОЛЯ</div>
+    <div class="an-conv" style="color:var(--text-3);font-size:10px">КОНВ.</div>
+  </div>
+  ${funnelRows}
+  <div class="an-divider"></div>
+  <div class="an-summary">
+    <div class="an-sum-item">
+      <div class="an-sum-val">${total}</div>
+      <div class="an-sum-lbl">Клиентов в воронке за период</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:var(--red)">${lostPeriod.length}</div>
+      <div class="an-sum-lbl">Потеряно за период</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:${dropPct > 30 ? 'var(--red)' : dropPct > 15 ? 'var(--amber)' : 'var(--green)'}">${dropPct}%</div>
+      <div class="an-sum-lbl">Отскок от воронки</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:var(--green)">${counts[counts.length-1].cnt}</div>
+      <div class="an-sum-lbl">Дошли до сделки</div>
+    </div>
+  </div>`;
+}
+
+/* ─── История потерянного клиента ─── */
+const FUNNEL_ORDER = [
+  'Показ объекта','Зум','Вызваниваем','Согласование условий',
+  'Одобрение ипотеки','Трейд-ин','Продаёт своё','Бронь оплачена',
+  'Подготовка документов','Выход на сделку','Закрытая сделка'
+];
+
+function openLostHistory(idx) {
+  const c = LOST[idx];
+  document.getElementById('lh-name').textContent = c.name;
+  document.getElementById('lost-history-modal').classList.add('open');
+
+  const STAGE_COLORS_MAP = {
+    'Показ объекта':'var(--neutral)','Зум':'var(--teal)',
+    'Вызваниваем':'var(--amber)','Согласование условий':'var(--blue)',
+    'Одобрение ипотеки':'var(--blue)','Трейд-ин':'var(--purple)',
+    'Продаёт своё':'var(--purple)','Бронь оплачена':'var(--teal)',
+    'Подготовка документов':'var(--purple)','Выход на сделку':'var(--green)',
+    'Закрытая сделка':'var(--green)'
+  };
+
+  let timelineItems = '';
+  let noteHtml = '';
+
+  if (c.history && c.history.length) {
+    // Реальная история с комментариями по этапам
+    const allSteps = [...c.history, { stage: c.stage, date: c.date, action: 'Потеря', comment: c.comment || '', isLost: true }];
+    // Убираем дубль если последний этап истории совпадает со stage
+    const last = c.history[c.history.length - 1];
+    const steps = last && last.stage === c.stage
+      ? [...c.history.slice(0,-1), { ...last, isLost: true }]
+      : allSteps;
+
+    timelineItems = steps.map((step, i) => {
+      const isLast = step.isLost || i === steps.length - 1;
+      const color = isLast ? 'var(--red)' : (STAGE_COLORS_MAP[step.stage] || 'var(--neutral)');
+      const icon = isLast ? '✕' : '✓';
+      return `
+      <div class="lh-step ${isLast ? 'lh-step-lost' : ''}">
+        <div class="lh-step-left">
+          <div class="lh-dot" style="background:${color};border-color:${color}">${icon}</div>
+          ${!isLast ? '<div class="lh-line"></div>' : ''}
+        </div>
+        <div class="lh-step-body">
+          <div class="lh-step-title" style="color:${isLast?'var(--red)':'var(--text)'}">${step.stage}</div>
+          ${step.date ? `<div class="lh-step-meta">${step.date}${step.action && step.action !== step.stage ? ' · ' + step.action : ''}</div>` : ''}
+          ${step.comment ? `<div class="lh-step-comment">${step.comment}</div>` : ''}
+          ${isLast && !step.comment ? `<div class="lh-step-sub" style="color:var(--red)">Клиент отвалился на этом этапе</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    // Нет истории — восстанавливаем по FUNNEL_ORDER
+    const stageIdx = FUNNEL_ORDER.indexOf(c.stage);
+    const passed = stageIdx >= 0 ? FUNNEL_ORDER.slice(0, stageIdx + 1) : [c.stage];
+    noteHtml = `<div class="lh-note">⚠ История этапов восстановлена по последнему этапу. Полная история появится после подключения к серверу.</div>`;
+    timelineItems = passed.map((stage, i) => {
+      const isLast = i === passed.length - 1;
+      const color = isLast ? 'var(--red)' : (STAGE_COLORS_MAP[stage] || 'var(--neutral)');
+      const icon = isLast ? '✕' : '✓';
+      return `
+      <div class="lh-step ${isLast ? 'lh-step-lost' : ''}">
+        <div class="lh-step-left">
+          <div class="lh-dot" style="background:${color};border-color:${color}">${icon}</div>
+          ${!isLast ? '<div class="lh-line"></div>' : ''}
+        </div>
+        <div class="lh-step-body">
+          <div class="lh-step-title" style="color:${isLast?'var(--red)':'var(--text)'}">${stage}</div>
+          ${isLast ? `<div class="lh-step-sub" style="color:var(--red)">Клиент отвалился на этом этапе</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('lh-body').innerHTML = `
+  <div class="lh-meta">
+    <div class="lh-meta-row"><span class="lh-meta-lbl">Менеджер</span><span class="lh-meta-val">${c.mgr}</span></div>
+    <div class="lh-meta-row"><span class="lh-meta-lbl">Бюджет</span><span class="lh-meta-val">${c.sum ? c.sum+' млн ₽' : '—'}</span></div>
+    <div class="lh-meta-row"><span class="lh-meta-lbl">Дата потери</span><span class="lh-meta-val">${c.date || '—'}</span></div>
+    <div class="lh-meta-row"><span class="lh-meta-lbl">Причина</span><span class="lh-meta-val" style="color:var(--red)">${c.reason || '—'}</span></div>
+  </div>
+
+  <div class="lh-section-title">История работы с клиентом</div>
+  ${noteHtml}
+  <div class="lh-timeline">${timelineItems}</div>`;
+}
+
+function closeLostHistory() {
+  document.getElementById('lost-history-modal').classList.remove('open');
+}
+
+/* ─── Аналитика менеджера ─── */
+let mgrAnalyticsDays = 7;
+let mgrAnalyticsName = '';
+
+function openMgrAnalytics(name) {
+  mgrAnalyticsName = name;
+  mgrAnalyticsDays = 7;
+  document.getElementById('mgr-an-title').textContent = name;
+  document.querySelectorAll('.mgr-an-period').forEach((b,i) => b.classList.toggle('active', i === 0));
+  document.getElementById('mgr-analytics-modal').classList.add('open');
+  renderMgrAnalytics();
+}
+
+function closeMgrAnalytics() {
+  document.getElementById('mgr-analytics-modal').classList.remove('open');
+}
+
+function setMgrAnalyticsPeriod(days, btn) {
+  mgrAnalyticsDays = days;
+  document.querySelectorAll('.mgr-an-period').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMgrAnalytics();
+}
+
+function renderMgrAnalytics() {
+  const name = mgrAnalyticsName;
+  const now = new Date();
+  const cutoff = mgrAnalyticsDays > 0 ? new Date(now - mgrAnalyticsDays * 86400000) : null;
+
+  const inPeriod = c => {
+    if (!cutoff) return true;
+    const d = parseDate(c.stageStart);
+    return d && d >= cutoff;
+  };
+
+  const allClients = CLIENTS.filter(c => c.mgr === name);
+  const periodClients = allClients.filter(inPeriod);
+  const lostMgr = LOST.filter(c => c.mgr === name && (!cutoff || (() => { const d = parseDate(c.date); return d && d >= cutoff; })()));
+
+  const FUNNEL = [
+    { label:'Показ / Зум',    stages:['Показ объекта','Зум'],                                    color:'var(--neutral)' },
+    { label:'Вызваниваем',    stages:['Вызваниваем'],                                             color:'var(--amber)'   },
+    { label:'Согласование',   stages:['Согласование условий','Одобрение ипотеки','Трейд-ин','Продаёт своё'], color:'var(--blue)' },
+    { label:'Бронь',          stages:['Бронь оплачена'],                                          color:'var(--teal)'    },
+    { label:'Документы',      stages:['Подготовка документов'],                                   color:'var(--purple)'  },
+    { label:'К сделке',       stages:['Выход на сделку','Закрытая сделка'],                       color:'var(--green)'   },
+  ];
+
+  const counts = FUNNEL.map(g => ({
+    ...g,
+    cnt: periodClients.filter(c => g.stages.includes(c.stage)).length,
+  }));
+
+  const hot = periodClients.filter(c => HOT_STAGES.has(c.stage)).length;
+  const triggers = periodClients.filter(isTrigger).length;
+  const maxCnt = Math.max(1, ...counts.map(g => g.cnt));
+
+  // Считаем потери по этапам (из LOST)
+  const lostByStage = {};
+  lostMgr.forEach(c => {
+    const stage = c.stage || 'Неизвестно';
+    // Находим группу воронки для этого этапа
+    const group = FUNNEL.find(g => g.stages.includes(stage));
+    const key = group ? group.label : stage;
+    lostByStage[key] = (lostByStage[key] || 0) + 1;
+  });
+
+  const totalInFunnel = counts.reduce((s,g) => s + g.cnt, 0);
+
+  const funnelRows = counts.map((g, i) => {
+    const bar = Math.round(g.cnt / maxCnt * 100);
+    const conv = i > 0 && counts[i-1].cnt > 0 ? Math.round(g.cnt / counts[i-1].cnt * 100) : null;
+    const dropped = lostByStage[g.label] || 0;
+    const dropPct = (g.cnt + dropped) > 0 ? Math.round(dropped / (g.cnt + dropped) * 100) : 0;
+    return `
+    <div class="an-row" style="grid-template-columns:130px 1fr 44px 60px 80px">
+      <div class="an-stage-lbl" style="display:flex;align-items:center;gap:6px">
+        <span style="width:7px;height:7px;border-radius:50%;background:${g.color};flex-shrink:0"></span>${g.label}
+      </div>
+      <div class="an-bar-wrap"><div class="an-bar" style="width:${bar}%;background:${g.color}"></div></div>
+      <div class="an-cnt">${g.cnt}</div>
+      ${conv !== null
+        ? `<div class="an-conv ${conv >= 50?'good':conv>=25?'mid':'bad'}">→ ${conv}%</div>`
+        : `<div class="an-conv"></div>`}
+      <div class="an-drop">${dropped > 0
+        ? `<span class="drop-chip">↩ ${dropped} (${dropPct}%)</span>`
+        : `<span style="color:var(--text-3);font-size:11px">—</span>`}
+      </div>
+    </div>`;
+  }).join('');
+
+  const totalDropped = lostMgr.length;
+  const retentionPct = (totalInFunnel + totalDropped) > 0
+    ? Math.round(totalInFunnel / (totalInFunnel + totalDropped) * 100) : 100;
+
+  const periodLabel = mgrAnalyticsDays === 0 ? 'всё время'
+    : mgrAnalyticsDays === 7 ? '7 дней'
+    : mgrAnalyticsDays === 14 ? '14 дней'
+    : mgrAnalyticsDays === 30 ? 'месяц' : 'квартал';
+
+  document.getElementById('mgr-analytics-body').innerHTML = `
+  <div class="an-subtitle">Клиенты менеджера за <strong>${periodLabel}</strong></div>
+  <div class="an-summary" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px">
+    <div class="an-sum-item">
+      <div class="an-sum-val">${allClients.length}</div>
+      <div class="an-sum-lbl">Всего клиентов</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:var(--hot)">${hot}</div>
+      <div class="an-sum-lbl">Горячих</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:var(--red)">${totalDropped}</div>
+      <div class="an-sum-lbl">Отскочило</div>
+    </div>
+    <div class="an-sum-item">
+      <div class="an-sum-val" style="color:${retentionPct>=70?'var(--green)':retentionPct>=50?'var(--amber)':'var(--red)'}">${retentionPct}%</div>
+      <div class="an-sum-lbl">Удержание</div>
+    </div>
+  </div>
+  <div class="an-header-row" style="grid-template-columns:130px 1fr 44px 60px 80px;margin-bottom:4px">
+    <div style="color:var(--text-3);font-size:10px">ЭТАП</div>
+    <div></div>
+    <div class="an-cnt" style="color:var(--text-3);font-size:10px">В РАБОТЕ</div>
+    <div class="an-conv" style="color:var(--text-3);font-size:10px">КОНВ.</div>
+    <div style="color:var(--text-3);font-size:10px;text-align:center">ОТСКОК</div>
+  </div>
+  ${funnelRows}
+  ${lostMgr.length > 0 ? `
+  <div class="an-divider"></div>
+  <div style="font-size:12px;color:var(--red);font-weight:700;margin-bottom:8px">↩ Отскочили за период</div>
+  ${lostMgr.map(c => `<div style="display:flex;gap:8px;align-items:baseline;font-size:11.5px;color:var(--text-2);padding:5px 0;border-bottom:1px solid var(--border)">
+    <strong style="min-width:120px">${c.name}</strong>
+    <span class="drop-chip" style="font-size:10px">${c.stage||'—'}</span>
+    <span style="color:var(--text-3)">${c.reason}</span>
+    ${c.comment ? `<span style="color:var(--text-3);opacity:.7">· ${c.comment}</span>` : ''}
+  </div>`).join('')}` : `
+  <div class="an-divider"></div>
+  <div style="font-size:12px;color:var(--green);font-weight:600;text-align:center;padding:8px">✓ Нет потерянных клиентов за период</div>`}`;
+}
+
+function openAddManagerModal() {
+  document.getElementById('new-mgr-name').value = '';
+  document.getElementById('new-mgr-err').style.display = 'none';
+  document.getElementById('add-mgr-modal').classList.add('open');
+  setTimeout(() => document.getElementById('new-mgr-name').focus(), 50);
+}
+
+function closeAddManagerModal() {
+  document.getElementById('add-mgr-modal').classList.remove('open');
+}
+
+function confirmAddManager() {
+  const name = document.getElementById('new-mgr-name').value.trim();
+  if (!name) { document.getElementById('new-mgr-err').style.display = 'block'; return; }
+  if (MANAGERS.find(m => m.toUpperCase() === name.toUpperCase())) { showToast('Менеджер уже есть в списке'); closeAddManagerModal(); return; }
+  MANAGERS.push(name);
+  saveToServer();
+  closeAddManagerModal();
+  render();
+  showToast(`Менеджер ${name} добавлен ✓`);
+}
+
+function toggleTrgMgr(uid) {
+  const drop = document.getElementById(uid);
+  const arrow = document.getElementById(uid + '-arrow');
+  if (!drop) return;
+  const open = drop.classList.toggle('open');
+  arrow && arrow.classList.toggle('open', open);
+}
+
+/* ─── CLIENTS TAB ─── */
+function renderClients() {
+  const mgrs = ['Все', ...new Set(CLIENTS.map(c=>c.mgr))];
+  const stages = ['Все','Вызваниваем','Показ объекта','Зум','Согласование условий','Одобрение ипотеки','Трейд-ин','Продаёт своё','Бронь оплачена','Подготовка документов','Выход на сделку'];
+  const filtered = CLIENTS.map((c,i)=>({...c,_idx:i})).filter(c =>
+    (mgrFilter === 'Все' || c.mgr === mgrFilter) &&
+    (clientFilter === 'Все' || c.stage === clientFilter) &&
+    (!searchQ || c.name.toLowerCase().includes(searchQ.toLowerCase()) || c.mgr.toLowerCase().includes(searchQ.toLowerCase()))
+  );
+
+  const totalSum = filtered.reduce((s,c)=>s+(c.sum||0),0);
+
+  const allTriggers = CLIENTS.filter(isTrigger);
+  const allHot = CLIENTS.filter(c => HOT_STAGES.has(c.stage));
+  const allSum = CLIENTS.reduce((s,c)=>s+(c.sum||0),0);
+  const hotSum = allHot.reduce((s,c)=>s+(c.sum||0),0);
+  const cnt = s => CLIENTS.filter(c => (Array.isArray(s) ? s : [s]).includes(c.stage)).length;
+
+  document.getElementById('tab-clients').innerHTML = `
+  <div class="metrics" style="margin-bottom:8px">
+    <div class="metric"><div class="metric-lbl">Всего клиентов</div><div class="metric-val">${CLIENTS.length}</div><div class="metric-sub">${fmt(allSum)} портфель</div></div>
+    <div class="metric"><div class="metric-lbl">Горячих сделок</div><div class="metric-val mv-hot">${allHot.length}</div><div class="metric-sub">${fmt(hotSum)} в работе</div></div>
+    <div class="metric"><div class="metric-lbl">Триггер 7 дней</div><div class="metric-val mv-red">${allTriggers.length}</div><div class="metric-sub">передать менеджера</div></div>
+    <div class="metric"><div class="metric-lbl">Вызваниваем</div><div class="metric-val mv-amber">${cnt('Вызваниваем')}</div><div class="metric-sub">без контакта</div></div>
+    <div class="metric"><div class="metric-lbl">К сделке</div><div class="metric-val mv-green">${cnt(['Выход на сделку','Бронь оплачена'])}</div><div class="metric-sub">бронь + выход</div></div>
+  </div>
+  ${renderFunnelBlock()}
+  <div class="search-bar">
+    <input class="search-input" placeholder="Поиск клиента или менеджера…" value="${searchQ}" oninput="searchQ=this.value;renderClients()" />
+    <div class="filters">
+      ${mgrs.map(m=>`<button class="fbtn ${mgrFilter===m?'active':''}" onclick="mgrFilter='${m}';renderClients()">${m}</button>`).join('')}
+    </div>
+    <button class="btn-add-client" onclick="openNewClientDrawer()">+ Добавить клиента</button>
+  </div>
+  <div class="table-wrap">
+    <div class="table-top">
+      <div class="table-ttl">Клиенты <span style="color:var(--text-2);font-weight:400">${filtered.length} · ${fmt(totalSum)}</span></div>
+      <div class="filters">
+        ${stages.map(s=>`<button class="fbtn ${clientFilter===s?'active':''}" onclick="clientFilter='${s}';renderClients()">${s}</button>`).join('')}
+      </div>
+    </div>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Клиент</th><th>Менеджер</th><th>Объект</th><th>Млн ₽</th><th>Этап</th><th>Дней</th><th>Статус</th><th>Комментарий</th></tr></thead>
+        <tbody>
+          ${filtered.map(c => {
+            const days = daysSince(c.stageStart);
+            const trigger = isTrigger(c);
+            const stageColor = STAGE_COLORS[c.stage] || '#625E58';
+            return `<tr onclick="openDrawer(${c._idx})" style="cursor:pointer">
+              <td class="td-bold" style="display:flex;align-items:center;gap:8px;border-bottom:none">
+                <span style="width:3px;height:32px;border-radius:2px;background:${stageColor};display:inline-block;flex-shrink:0"></span>
+                ${c.name}
+              </td>
+              <td class="td-dim" style="white-space:nowrap">${c.mgr}</td>
+              <td class="td-dim">${c.obj !== '?' ? c.obj : '—'}</td>
+              <td>${c.sum||'—'}</td>
+              <td>${stageBadge(c.stage)}</td>
+              <td class="td-dim">${days !== null ? days+'дн.' : '—'}</td>
+              <td>${trigger ? '<span class="trigger-chip">🚨</span>' : `<span style="font-size:11px;color:var(--text-3)">${c.status||'—'}</span>`}</td>
+              <td class="td-dim" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.comment}</td>
+            </tr>`;
+          }).join('') || '<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--text-3)">Нет клиентов</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function renderFunnelBlock() {
+  const counts = {}, sums = {};
+  CLIENTS.forEach(c => {
+    const s = c.stage || 'Неизвестно';
+    counts[s] = (counts[s]||0)+1;
+    sums[s] = (sums[s]||0)+(c.sum||0);
+  });
+  const groups = [
+    { label:'Показ / Зум',    stages:['Показ объекта','Зум'],                               fl:'fl-n', fn:'fn-n' },
+    { label:'Вызваниваем',    stages:['Вызваниваем'],                                        fl:'fl-n', fn:'fn-n' },
+    { label:'Согласование',   stages:['Согласование условий','Одобрение ипотеки','Трейд-ин','Продаёт своё'], fl:'fl-b', fn:'fn-b' },
+    { label:'Бронь',          stages:['Бронь оплачена'],                                    fl:'fl-o', fn:'fn-o' },
+    { label:'Документы',      stages:['Подготовка документов'],                              fl:'fl-o', fn:'fn-o' },
+    { label:'К сделке',       stages:['Выход на сделку','Закрытая сделка'],                  fl:'fl-g', fn:'fn-g' },
+  ];
+  const cols = groups.map(g => {
+    const cnt = g.stages.reduce((s,st)=>s+(counts[st]||0),0);
+    const sum = g.stages.reduce((s,st)=>s+(sums[st]||0),0);
+    return `<div class="funnel-col">
+      <div class="funnel-lbl ${g.fl}">${g.label}</div>
+      <div class="funnel-num ${g.fn}">${cnt}</div>
+      <div class="funnel-sub">${sum ? fmt(sum) : '—'}</div>
+    </div>`;
+  }).join('');
+  return `
+  <div class="sec-head" style="margin-bottom:10px">
+    <div class="sec-title">Воронка по этапам</div>
+    <button class="btn-add-client" style="background:var(--blue)" onclick="openAnalyticsModal()">📊 Аналитика периода</button>
+  </div>
+  <div class="funnel-cols">${cols}</div>`;
+}
+
+/* ─── MANAGERS TAB ─── */
+function setMgrTablePeriod(days, el) {
+  mgrTableDays = days;
+  document.querySelectorAll('.mgr-period-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderManagers();
+}
+
+function renderManagers() {
+  const cutoff = mgrTableDays ? (() => { const d = new Date(2026,8,4); d.setDate(d.getDate() - mgrTableDays); return d; })() : null;
+
+  const stats = {};
+  MANAGERS.forEach(m => { stats[m] = { total:0, trigger:0, lost:0, hot:0, bron:0, docs:0, deal:0, closed:0, sum:0, closedSum:0, commission:0 }; });
+  CLIENTS.forEach(c => {
+    if (cutoff) {
+      const d = parseDate(c.stageStart);
+      if (!d || d < cutoff) return;
+    }
+    if (!stats[c.mgr]) stats[c.mgr] = { total:0, trigger:0, lost:0, hot:0, bron:0, docs:0, deal:0, closed:0, sum:0, closedSum:0, commission:0 };
+    const s = stats[c.mgr];
+    s.total++;
+    if (isTrigger(c)) s.trigger++;
+    if (HOT_STAGES.has(c.stage)) s.hot++;
+    if (c.stage === 'Бронь оплачена') s.bron++;
+    if (c.stage === 'Подготовка документов') s.docs++;
+    if (c.stage === 'Выход на сделку') s.deal++;
+    if (c.stage === 'Закрытая сделка') s.closed++;
+    s.sum += (c.sum||0);
+    if (c.closedSum) s.closedSum += c.closedSum;
+    if (c.commission) s.commission += c.commission;
+  });
+  LOST.forEach(c => {
+    if (cutoff) {
+      const d = parseDate(c.date);
+      if (!d || d < cutoff) return;
+    }
+    if (!stats[c.mgr]) stats[c.mgr] = { total:0, trigger:0, lost:0, hot:0, bron:0, docs:0, deal:0, closed:0, sum:0, closedSum:0, commission:0 };
+    stats[c.mgr].lost++;
+  });
+
+  const sorted = Object.entries(stats).sort((a,b) =>
+    (b[1].closed + b[1].deal*0.9 + b[1].bron*0.7 + b[1].hot*0.4) -
+    (a[1].closed + a[1].deal*0.9 + a[1].bron*0.7 + a[1].hot*0.4)
+  );
+
+  const medals = ['🥇','🥈','🥉'];
+
+  // Считаем изменение позиций относительно предыдущего рендера
+  const currentRank = {};
+  sorted.forEach(([name], i) => { currentRank[name] = i + 1; });
+
+  const rows = sorted.map(([name, s], i) => {
+    const rank = i + 1;
+    const medal = medals[i] || `<span class="rank-num">${rank}</span>`;
+    const ini = name.split(' ').map(w=>w[0]||'').join('').slice(0,2);
+    const hasTrigger = s.trigger > 0;
+
+    let moveBadge = '';
+    if (prevMgrRank[name] !== undefined && prevMgrRank[name] !== rank) {
+      const delta = prevMgrRank[name] - rank; // положительный = поднялся
+      if (delta > 0) moveBadge = `<span class="rank-move up">▲ ${delta}</span>`;
+      else moveBadge = `<span class="rank-move down">▼ ${Math.abs(delta)}</span>`;
+    } else if (prevMgrRank[name] === rank) {
+      moveBadge = `<span class="rank-move same">—</span>`;
+    } else {
+      moveBadge = `<span class="rank-move new">NEW</span>`;
+    }
+
+    return `
+    <tr class="lb-row ${hasTrigger ? 'lb-danger' : ''}" onclick="openMgrAnalytics('${name}')" style="cursor:pointer">
+      <td class="lb-rank">${medal}<div style="margin-top:3px">${moveBadge}</div></td>
+      <td class="lb-mgr">
+        <div class="lb-ava">${ini}</div>
+        <div>
+          <div class="lb-name">${name}</div>
+          <div class="lb-sub">${s.total} клиентов · ${fmt(s.sum)}</div>
+        </div>
+      </td>
+      <td class="lb-num">${s.lost > 0 ? `<span class="lb-chip" style="background:rgba(204,60,60,.15);color:var(--red)">${s.lost}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.trigger > 0 ? `<span class="lb-chip trigger">${s.trigger}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.hot > 0 ? `<span class="lb-chip hot">${s.hot}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.bron > 0 ? `<span class="lb-chip bron">${s.bron}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.docs > 0 ? `<span class="lb-chip docs">${s.docs}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.deal > 0 ? `<span class="lb-chip deal">${s.deal}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num">${s.closed > 0 ? `<span class="lb-chip closed">${s.closed}</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num" style="font-variant-numeric:tabular-nums">${s.closedSum > 0 ? `<span style="font-weight:700;color:var(--green)">${s.closedSum} млн</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-num" style="font-variant-numeric:tabular-nums">${s.commission > 0 ? `<span style="font-weight:700;color:var(--purple)">${(s.commission/1000).toFixed(0)} тыс ₽</span>` : '<span class="lb-zero">—</span>'}</td>
+      <td class="lb-action"><button class="mgr-delete-btn" style="opacity:1;pointer-events:auto" onclick="event.stopPropagation();confirmDeleteManager('${name}')" title="Удалить">✕</button></td>
+    </tr>`;
+  }).join('');
+
+  const periods = [
+    { label:'7 дней', days:7 }, { label:'14 дней', days:14 },
+    { label:'Месяц', days:30 }, { label:'Квартал', days:90 },
+    { label:'Год', days:365 }, { label:'Всё время', days:null }
+  ];
+  const periodBtns = periods.map(p => `
+    <button class="mgr-period-btn${mgrTableDays === p.days ? ' active' : ''}"
+      onclick="setMgrTablePeriod(${p.days === null ? 'null' : p.days}, this)">${p.label}</button>`).join('');
+
+  document.getElementById('tab-managers').innerHTML = `
+  <div class="sec-head" style="margin-bottom:10px">
+    <div class="sec-title">Турнирная таблица <span class="sec-count">${sorted.length} менеджеров</span></div>
+    <button class="btn-add-client" onclick="openAddManagerModal()">+ Добавить менеджера</button>
+  </div>
+  <div class="period-bar" style="margin-bottom:14px">${periodBtns}</div>
+  <div class="table-wrap">
+    <div class="tbl-scroll">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th class="lb-rank">#</th>
+            <th style="text-align:left;padding-left:8px">Менеджер</th>
+            <th class="lb-num" title="Отскочившие клиенты">❌ Отскок</th>
+            <th class="lb-num" title="Триггер — не выходит на связь">🚨 Триггер</th>
+            <th class="lb-num" title="Горячих сделок">🔥 Горячих</th>
+            <th class="lb-num" title="Бронь оплачена">📋 Бронь</th>
+            <th class="lb-num" title="Подготовка документов">📁 Документы</th>
+            <th class="lb-num" title="Выход на сделку">🤝 К сделке</th>
+            <th class="lb-num" title="Закрытая сделка">✅ Закрыто</th>
+            <th class="lb-num" title="Сумма закрытых сделок">💰 Сумма</th>
+            <th class="lb-num" title="Комиссионное вознаграждение">🏆 Комиссия</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+
+  // Сохраняем текущий рейтинг для следующего сравнения
+  prevMgrRank = { ...currentRank };
+}
+
+/* ─── FUNNEL TAB ─── */
+function renderFunnel() {
+  const counts = {}, sums = {};
+  CLIENTS.forEach(c => {
+    const s = c.stage || 'Неизвестно';
+    counts[s] = (counts[s]||0)+1;
+    sums[s] = (sums[s]||0)+(c.sum||0);
+  });
+
+  const groups = [
+    {label:'Показ / Зум',   stages:['Показ объекта','Зум'],                              fl:'fl-n', fn:'fn-n'},
+    {label:'Согласование',  stages:['Согласование условий','Одобрение ипотеки','Трейд-ин'],fl:'fl-b', fn:'fn-b'},
+    {label:'Бронь',         stages:['Бронь оплачена'],                                   fl:'fl-o', fn:'fn-o'},
+    {label:'Документы',     stages:['Подготовка документов'],                             fl:'fl-o', fn:'fn-o'},
+    {label:'К сделке',      stages:['Выход на сделку','Закрытая сделка'],                 fl:'fl-g', fn:'fn-g'},
+  ];
+
+  const cols = groups.map(g => {
+    const cnt = g.stages.reduce((s,st)=>s+(counts[st]||0),0);
+    const sum = g.stages.reduce((s,st)=>s+(sums[st]||0),0);
+    return `<div class="funnel-col">
+      <div class="funnel-lbl ${g.fl}">${g.label}</div>
+      <div class="funnel-num ${g.fn}">${cnt}</div>
+      <div class="funnel-sub">${fmt(sum)}</div>
+    </div>`;
+  }).join('');
+
+  const rows = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([s,cnt])=>`
+    <tr>
+      <td>${stageBadge(s)}</td>
+      <td>${cnt}</td>
+      <td>${fmt(sums[s]||0)}</td>
+      <td style="color:var(--text-3)">${Math.round((cnt/CLIENTS.length)*100)}%</td>
+    </tr>`).join('');
+
+  document.getElementById('tab-funnel').innerHTML = `
+  <div class="sec-head" style="margin-bottom:14px">
+    <div class="sec-title">Воронка по этапам</div>
+  </div>
+  <div class="funnel-cols">${cols}</div>
+  <div class="table-wrap">
+    <div class="table-top"><div class="table-ttl">Детализация</div></div>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Этап</th><th>Клиентов</th><th>Портфель</th><th>Доля</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+/* ─── LOST TAB ─── */
+function renderLost() {
+  const totalSum = LOST.reduce((s,c)=>s+(c.sum||0),0);
+  const reasons = {};
+  LOST.forEach(c => { reasons[c.reason] = (reasons[c.reason]||0)+1; });
+  const maxR = Math.max(1,...Object.values(reasons));
+  const stages = {};
+  LOST.forEach(c => { stages[c.stage]=(stages[c.stage]||0)+1; });
+  const worstStage = Object.entries(stages).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('tab-lost').innerHTML = `
+  <div class="lost-tiles">
+    <div class="lost-tile"><div class="lost-val" style="color:var(--red)">${LOST.length}</div><div class="lost-lbl">Отвалилось всего</div></div>
+    <div class="lost-tile"><div class="lost-val" style="color:var(--hot)">${fmt(totalSum)}</div><div class="lost-lbl">Потерянный портфель</div></div>
+    <div class="lost-tile"><div class="lost-val" style="color:var(--blue);font-size:16px;padding-top:8px">${worstStage?worstStage[0]:'—'}</div><div class="lost-lbl">Чаще теряем на этом этапе</div></div>
+  </div>
+  <div class="reason-block" style="margin-bottom:14px">
+    <div class="sec-title" style="margin-bottom:12px">Топ причин потерь</div>
+    ${Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n])=>`
+    <div class="reason-row">
+      <div class="reason-lbl">${r}</div>
+      <div class="reason-track"><div class="reason-fill" style="width:${Math.round(n/maxR*100)}%"></div></div>
+      <div class="reason-n">${n}</div>
+    </div>`).join('')}
+  </div>
+  <div class="table-wrap">
+    <div class="table-top"><div class="table-ttl">Список потерянных</div></div>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>Клиент</th><th>Менеджер</th><th>Млн ₽</th><th>Этап отвала</th><th>Причина</th><th>Дата</th></tr></thead>
+        <tbody>
+          ${LOST.map((c,i)=>`<tr onclick="openLostHistory(${i})" style="cursor:pointer">
+            <td class="td-bold" style="display:flex;align-items:center;gap:8px;border-bottom:none">
+              <span style="font-size:15px">👤</span>${c.name}
+            </td>
+            <td class="td-dim">${c.mgr}</td>
+            <td>${c.sum||'—'}</td>
+            <td>${stageBadge(c.stage)}</td>
+            <td class="td-dim">${c.reason}</td>
+            <td class="td-dim">${c.date}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+/* ─── Новый клиент ─── */
+function openNewClientDrawer() {
+  activeClientIdx = null;
+  document.getElementById('drawer-title').textContent = 'Новый клиент';
+  document.getElementById('drawer-bar').style.background = 'var(--neutral)';
+  document.getElementById('btn-save').textContent = 'Добавить клиента';
+  document.getElementById('btn-save').style.background = '';
+
+  const stageOpts = ALL_STAGES.map(s => `<option value="${s}">${s}</option>`).join('');
+  const mgrOpts = MANAGERS.map(m => `<option value="${m}">${m}</option>`).join('');
+  const prioHtml = PRIO_OPTS.map(p => `
+    <div class="prio-opt" onclick="selectPrio(this,'${p.key}')">
+      <span class="prio-dot-sm" style="background:${p.color}"></span>${p.label}
+    </div>`).join('');
+  const statusHtml = STATUS_OPTS.map(s => `
+    <div class="status-opt" onclick="selectStatus(this,'${s.key}')" style="--sc:${s.color}">
+      <span class="status-dot-sm" style="background:${s.color}"></span>${s.label}
+    </div>`).join('');
+
+  document.getElementById('drawer-body').innerHTML = `
+    <!-- CRM поиск по номеру -->
+    <div class="crm-lookup">
+      <div class="crm-lookup-title">Найти клиента в AmoCRM</div>
+      <div class="crm-lookup-row">
+        <input class="crm-lookup-input" id="crm-phone-input" placeholder="Имя клиента или телефон..."
+          oninput="onCRMInput()" onkeydown="if(event.key==='Enter')lookupCRM()" />
+        <button class="crm-lookup-btn" id="crm-lookup-btn" onclick="lookupCRM()">
+          <span id="crm-btn-icon">↗</span> Найти
+        </button>
+      </div>
+      <div class="crm-result" id="crm-result"></div>
+      <div id="crm-results-list" style="margin-top:8px;display:none;flex-direction:column;gap:6px"></div>
+    </div>
+
+    <input type="hidden" id="f-prio" value="">
+    <input type="hidden" id="f-status" value="">
+    <input type="hidden" id="f-crm-id" value="">
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Имя клиента</label>
+        <input class="field-input" id="f-name" placeholder="Имя клиента">
+      </div>
+      <div class="field">
+        <label class="field-label">Менеджер</label>
+        <select class="field-select" id="f-mgr">${mgrOpts}</select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Телефон</label>
+        <input class="field-input" id="f-phone" placeholder="+7 999 000 00 00">
+      </div>
+      <div class="field">
+        <label class="field-label">Бюджет, млн ₽</label>
+        <input class="field-input" id="f-sum" type="number" placeholder="0">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Объект / ЖК</label>
+        <input class="field-input" id="f-obj" placeholder="Название ЖК">
+      </div>
+      <div class="field">
+        <label class="field-label">Ссылка AmoCRM</label>
+        <input class="field-input" id="f-crm" placeholder="https://...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Этап сделки</label>
+      <select class="field-select" id="f-stage" onchange="onStageChange(this.value)">${stageOpts}</select>
+      <div class="stage-preview" id="stage-preview">
+        <span class="stage-dot" id="stage-dot" style="background:var(--neutral)"></span>
+        <span id="stage-preview-text">Показ объекта</span>
+      </div>
+    </div>
+
+    <div id="qs-block"></div>
+
+    <div class="field">
+      <label class="field-label">Приоритет РОПа</label>
+      <div class="prio-grid">${prioHtml}</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Статус</label>
+      <div class="status-grid">${statusHtml}</div>
+    </div>
+
+    <hr class="drawer-divider">
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Дата ОС</label>
+        <input class="field-input" id="f-osdate" type="date">
+      </div>
+      <div class="field">
+        <label class="field-label">Время ОС</label>
+        <input class="field-input" id="f-ostime" type="time">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Комментарий</label>
+      <textarea class="field-textarea" id="f-comment" placeholder="Что происходит по клиенту…"></textarea>
+    </div>
+  `;
+
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('crm-phone-input').focus();
+}
+
+/* ─── Поиск в CRM по номеру ─── */
+const AMO_PROXY = 'http://176.53.160.151:3000';
+
+let crmInputTimer = null;
+function onCRMInput() {
+  clearTimeout(crmInputTimer);
+  const q = document.getElementById('crm-phone-input').value.trim();
+  if (q.length < 2) {
+    document.getElementById('crm-results-list').style.display = 'none';
+    return;
+  }
+  crmInputTimer = setTimeout(() => lookupCRM(), 500);
+}
+
+async function lookupCRM() {
+  const q = document.getElementById('crm-phone-input').value.trim();
+  if (q.length < 2) return;
+
+  const btn = document.getElementById('crm-lookup-btn');
+  const icon = document.getElementById('crm-btn-icon');
+  const result = document.getElementById('crm-result');
+  const list = document.getElementById('crm-results-list');
+
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  result.className = 'crm-result';
+  result.textContent = '';
+  list.style.display = 'none';
+  list.innerHTML = '';
+
+  try {
+    const res = await fetch(`${AMO_PROXY}/api/search?q=${encodeURIComponent(q)}`);
+    if (!res.ok) throw new Error('Сервер вернул ' + res.status);
+    const items = await res.json();
+
+    if (!items.length) {
+      result.className = 'crm-result not-found';
+      result.textContent = 'Клиент не найден в AmoCRM';
+      return;
+    }
+
+    list.style.display = 'flex';
+    list.innerHTML = items.map((d, i) => `
+      <div onclick="fillFromCRM(${i})" style="
+        padding:10px 12px;border-radius:8px;cursor:pointer;
+        background:var(--raised);border:1px solid var(--border);
+        display:flex;flex-direction:column;gap:3px;
+        transition:border-color .15s" data-crm-idx="${i}"
+        onmouseover="this.style.borderColor='var(--hot)'"
+        onmouseout="this.style.borderColor='var(--border)'">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700;font-size:13px">${d.name}</div>
+          ${d.mgr ? `<div style="font-size:10px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.04em">${d.mgr}</div>` : ''}
+        </div>
+        <div style="font-size:11px;color:var(--text-2)">${d.obj || '—'} · <span style="color:var(--blue)">${d.stage}</span> ${d.sum ? '· ' + d.sum + ' млн' : ''} ${d.phone ? '· ' + d.phone : ''}</div>
+      </div>`).join('');
+
+    // Store for fillFromCRM
+    window._crmResults = items;
+    result.className = 'crm-result found';
+    result.textContent = `Найдено ${items.length} клиент${items.length === 1 ? '' : items.length < 5 ? 'а' : 'ов'} — выберите нужного`;
+
+  } catch(e) {
+    result.className = 'crm-result error';
+    result.innerHTML = `<strong>Сервер недоступен</strong><br><span style="opacity:.8;font-size:11px">Убедись что server.js запущен на ${AMO_PROXY}</span>`;
+  } finally {
+    btn.disabled = false;
+    icon.textContent = '↗';
+  }
+}
+
+// Вызывается при выборе клиента из списка результатов
+function fillFromCRM(idx) {
+  const data = (window._crmResults || [])[idx];
+  if (!data) return;
+  const result = document.getElementById('crm-result');
+  const list = document.getElementById('crm-results-list');
+
+  if (data.name)         document.getElementById('f-name').value   = data.name;
+  if (data.phone)        document.getElementById('f-phone').value  = data.phone;
+  if (data.sum != null)  document.getElementById('f-sum').value    = data.sum;
+  if (data.obj)          document.getElementById('f-obj').value    = data.obj;
+  if (data.crm)          document.getElementById('f-crm-id').value = data.crm;
+  if (data.crmUrl)       document.getElementById('f-crm').value    = data.crmUrl;
+  // Менеджер: ищем точное совпадение полного имени из AmoCRM
+  if (data.mgr) {
+    const sel = document.getElementById('f-mgr');
+    if (sel) {
+      const crmFull = data.mgr.trim().toUpperCase();
+      const opt = Array.from(sel.options).find(o => o.value.trim().toUpperCase() === crmFull);
+      if (opt) {
+        sel.value = opt.value;
+        _mgrNameToId[opt.value.toUpperCase()] = data.mgrId;
+      }
+    }
+    if (data.mgrId) _mgrNameToId[data.mgr.toUpperCase()] = data.mgrId;
+  }
+  if (data.stage) {
+    document.getElementById('f-stage').value = data.stage;
+    onStageChange(data.stage);
+  }
+  list.style.display = 'none';
+  result.className = 'crm-result found';
+  result.innerHTML = `✓ Выбран: <strong>${data.name}</strong> · ${data.obj||''} ${data.sum ? '· ' + data.sum + ' млн' : ''}${data.mgr ? ' · ' + data.mgr : ''}`;
+}
+
+// Синхронизация ответственного менеджера в AmoCRM
+// mgrName — имя менеджера из дашборда, нужно найти его mgrId из _crmResults или сохранённого
+const _mgrNameToId = {};
+async function syncMgrToAmoCRM(crmId, mgrName) {
+  const mgrId = _mgrNameToId[mgrName.toUpperCase()];
+  if (!mgrId) return; // нет ID — не обновляем
+  try {
+    await fetch(`${AMO_PROXY}/api/lead/${crmId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ responsible_user_id: mgrId })
+    });
+  } catch(e) { console.warn('AmoCRM sync failed:', e.message); }
+}
+
+/* ─── Сохранение нового клиента ─── */
+function saveNewClient() {
+  const name = (document.getElementById('f-name')?.value || '').trim();
+  if (!name) { showToast('Введите имя клиента'); return; }
+  const newClient = {
+    mgr:      document.getElementById('f-mgr')?.value || MANAGERS[0],
+    name,
+    phone:    (document.getElementById('f-phone')?.value || '').trim(),
+    sum:      parseFloat(document.getElementById('f-sum')?.value) || 0,
+    obj:      (document.getElementById('f-obj')?.value || '').trim() || '?',
+    crm:      (document.getElementById('f-crm')?.value || '').trim(),
+    crmId:    (document.getElementById('f-crm-id')?.value || '').trim(),
+    stage:    document.getElementById('f-stage')?.value || ALL_STAGES[0],
+    stageStart: new Date().toLocaleDateString('ru-RU'),
+    prio:     document.getElementById('f-prio')?.value || '',
+    status:   document.getElementById('f-status')?.value || '🟡 В работе',
+    osDate:   (document.getElementById('f-osdate')?.value || '').trim(),
+    osTime:   (document.getElementById('f-ostime')?.value || '').trim(),
+    comment:  (document.getElementById('f-comment')?.value || '').trim(),
+  };
+  CLIENTS.unshift(newClient);
+  saveToServer();
+  updateBadges(); render(); closeDrawer(); showToast('Клиент добавлен ✓');
+}
+
+/* ─── Закрытые сделки ─── */
+let CLOSED = [];
+
+/* ─── Drawer ─── */
+const DEFAULT_MANAGERS = ['Денис Михалев','Владислав Соколов','Елена Кленко','Анна Плешакова','Георгий Сагдетдинов','Артем Легай','Алина Тешаева','Кристиан Шкепу','Мисюра Мария','Яркова Кира','Владислав Дорофеев','Назарян Альберт','Абдуллаева Амина','Иванов Егор','Дмитрий Ефремов'];
+let MANAGERS = DEFAULT_MANAGERS.slice();
+
+let _saveTimer = null;
+function saveToServer() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    fetch(AMO_PROXY + '/api/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clients: CLIENTS, lost: LOST, managers: MANAGERS })
+    }).catch(e => console.warn('Save error:', e));
+  }, 500);
+}
+
+async function loadFromServer() {
+  try {
+    const r = await fetch(AMO_PROXY + '/api/data');
+    const d = await r.json();
+    if (d.managers && d.managers.length) MANAGERS.splice(0, MANAGERS.length, ...d.managers);
+    if (d.clients) CLIENTS.splice(0, CLIENTS.length, ...d.clients);
+    if (d.lost) LOST.splice(0, LOST.length, ...d.lost);
+  } catch(e) { console.warn('Load error:', e); }
+}
+const ALL_STAGES = ['Показ объекта','Вызваниваем','Зум','Согласование условий','Одобрение ипотеки','Трейд-ин','Продаёт своё','Бронь оплачена','Подготовка документов','Ждём лот','Выход на сделку','Закрытая сделка'];
+const STAGE_COLORS = {
+  'Показ объекта':'#625E58','Вызваниваем':'#CC3C3C','Зум':'#189690',
+  'Согласование условий':'#2C79CC','Одобрение ипотеки':'#2C79CC','Трейд-ин':'#7A67EB',
+  'Бронь оплачена':'#E04E22','Подготовка документов':'#E04E22',
+  'Ждём лот':'#625E58','Выход на сделку':'#E04E22','Закрытая сделка':'#18A368',
+};
+const STATUS_OPTS = [
+  { key:'🔴 Риск потери',   label:'Риск потери',   color:'#CC3C3C' },
+  { key:'🟡 В работе',      label:'В работе',       color:'#C98B0A' },
+  { key:'🔵 Тёплый клиент', label:'Тёплый клиент',  color:'#2C79CC' },
+  { key:'🟡 Горячий',       label:'Горячий',        color:'#C98B0A' },
+  { key:'🟢 Закрывается',   label:'Закрывается',    color:'#18A368' },
+];
+
+const PRIO_OPTS = [
+  { key:'СРОЧНО',      label:'Дожать до брони',    color:'#E04E22' },
+  { key:'НА КОНТРОЛЕ', label:'Контроль сделки',     color:'#2C79CC' },
+  { key:'КОНТРОЛЬ',    label:'Взять во внимание',   color:'#625E58' },
+  { key:'ЗАКРЫТО',     label:'Контроль перехода на следующий этап',   color:'#7A67EB' },
+];
+
+let activeClientIdx = null;
+
+function openDrawer(idx) {
+  activeClientIdx = idx;
+  const c = CLIENTS[idx];
+  document.getElementById('drawer-title').textContent = c.name;
+  renderDrawerBody(c);
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('btn-close-deal').style.display = currentTab === 'hot' ? '' : 'none';
+  const btnImp = document.getElementById('btn-important');
+  btnImp.classList.toggle('active', !!CLIENTS[idx].important);
+  btnImp.textContent = CLIENTS[idx].important ? '⚡ В важных' : '⚡ Важный';
+}
+
+function closeDrawer() {
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow = '';
+  activeClientIdx = null;
+}
+
+function renderDrawerBody(c) {
+  const stageColor = STAGE_COLORS[c.stage] || '#625E58';
+  document.getElementById('drawer-bar').style.background = stageColor;
+
+  const stageOpts = ALL_STAGES.map(s =>
+    `<option value="${s}" ${c.stage===s?'selected':''}>${s}</option>`).join('');
+  const mgrOpts = MANAGERS.map(m =>
+    `<option value="${m}" ${c.mgr===m?'selected':''}>${m}</option>`).join('');
+
+  const prioHtml = PRIO_OPTS.map(p => `
+    <div class="prio-opt ${c.prio===p.key?'selected':''}" onclick="selectPrio(this,'${p.key}')">
+      <span class="prio-dot-sm" style="background:${p.color}"></span>
+      ${p.label}
+    </div>`).join('');
+
+  const qs = STAGE_QS[c.stage] || [];
+  const qsHtml = qs.length ? `
+    <div class="questions-block">
+      <div class="questions-block-title">Вопросы РОПу · ${c.stage}</div>
+      ${qs.map(q=>`<div class="q-item">${q}</div>`).join('')}
+    </div>` : '';
+
+  document.getElementById('drawer-body').innerHTML = `
+    <input type="hidden" id="f-prio" value="${c.prio||''}">
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Имя клиента</label>
+        <input class="field-input" id="f-name" value="${c.name||''}" placeholder="Имя клиента">
+      </div>
+      <div class="field">
+        <label class="field-label">Менеджер</label>
+        <select class="field-select" id="f-mgr">${mgrOpts}</select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Телефон</label>
+        <input class="field-input" id="f-phone" value="${c.phone||''}" placeholder="+7 999 000 00 00">
+      </div>
+      <div class="field">
+        <label class="field-label">Бюджет, млн ₽</label>
+        <input class="field-input" id="f-sum" type="number" value="${c.sum||''}" placeholder="0">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Объект / ЖК</label>
+        <input class="field-input" id="f-obj" value="${c.obj!=='?'?c.obj:''}" placeholder="Название ЖК">
+      </div>
+      <div class="field">
+        <label class="field-label">Ссылка AmoCRM</label>
+        <input class="field-input" id="f-crm" value="${c.crm||''}" placeholder="https://...">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Этап сделки</label>
+      <select class="field-select" id="f-stage" onchange="onStageChange(this.value)">${stageOpts}</select>
+      <div class="stage-preview" id="stage-preview">
+        <span class="stage-dot" id="stage-dot" style="background:${stageColor}"></span>
+        <span id="stage-preview-text">${c.stage}</span>
+      </div>
+    </div>
+
+    <div id="qs-block">${qsHtml}</div>
+
+    <div class="field">
+      <label class="field-label">Приоритет РОПа</label>
+      <div class="prio-grid">${prioHtml}</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Статус</label>
+      <div class="status-grid" id="status-grid">
+        ${STATUS_OPTS.map(s => `
+          <div class="status-opt ${c.status===s.key?'selected':''}" onclick="selectStatus(this,'${s.key}')" style="--sc:${s.color}">
+            <span class="status-dot-sm" style="background:${s.color}"></span>
+            ${s.label}
+          </div>`).join('')}
+      </div>
+      <input type="hidden" id="f-status" value="${c.status||''}">
+    </div>
+
+    <hr class="drawer-divider">
+
+    <div class="field">
+      <label class="field-label" style="color:var(--green);font-weight:700">📅 Планируемая дата сделки</label>
+      <input class="field-input" id="f-deal-date" type="date" value="${c.dealDate||''}" style="border-color:rgba(24,163,104,.4)">
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label">Дата ОС</label>
+        <input class="field-input" id="f-osdate" type="date" value="${c.osDate||''}">
+      </div>
+      <div class="field">
+        <label class="field-label">Время ОС</label>
+        <input class="field-input" id="f-ostime" type="time" value="${c.osTime||''}">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Комментарий</label>
+      <textarea class="field-textarea" id="f-comment" placeholder="Что происходит по клиенту…">${c.comment||''}</textarea>
+    </div>
+
+    ${c.crm ? `<a href="${c.crm}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--blue);text-decoration:none;margin-top:4px">↗ Открыть в AmoCRM</a>` : ''}
+  `;
+
+  updateSaveBtn(c.stage);
+}
+
+function onStageChange(stage) {
+  const color = STAGE_COLORS[stage] || '#625E58';
+  document.getElementById('drawer-bar').style.background = color;
+  document.getElementById('stage-dot').style.background = color;
+  document.getElementById('stage-preview-text').textContent = stage;
+  const qs = STAGE_QS[stage] || [];
+  document.getElementById('qs-block').innerHTML = qs.length ? `
+    <div class="questions-block">
+      <div class="questions-block-title">Вопросы РОПу · ${stage}</div>
+      ${qs.map(q=>`<div class="q-item">${q}</div>`).join('')}
+    </div>` : '';
+  updateSaveBtn(stage);
+}
+
+function updateSaveBtn(stage) {
+  const btn = document.getElementById('btn-save');
+  if (!btn) return;
+  if (stage === 'Вызваниваем') { btn.textContent = 'Сохранить + триггер 7 дней'; btn.style.background = '#CC3C3C'; }
+  else if (stage === 'Закрытая сделка') { btn.textContent = 'Зафиксировать закрытие'; btn.style.background = '#18A368'; }
+  else if (stage === 'Зум') { btn.textContent = 'Сохранить + поставить зум'; btn.style.background = '#189690'; }
+  else { btn.textContent = 'Сохранить'; btn.style.background = ''; }
+}
+
+function selectPrio(el, key) {
+  document.querySelectorAll('.prio-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('f-prio').value = key;
+}
+
+function selectStatus(el, key) {
+  document.querySelectorAll('.status-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('f-status').value = key;
+}
+
+function calcCommissionPct() {
+  const sumEl = document.getElementById('f-closed-sum');
+  const cmEl  = document.getElementById('f-commission');
+  const hint  = document.getElementById('commission-hint');
+  if (!hint) return;
+  const s = parseFloat(sumEl?.value);
+  const c = parseFloat(cmEl?.value);
+  if (s > 0 && c > 0) {
+    const pct = ((c / (s * 1000000)) * 100).toFixed(2);
+    hint.textContent = `≈ ${pct}% от суммы сделки`;
+    hint.style.color = 'var(--green)';
+  } else {
+    hint.textContent = 'Введите сумму и комиссию для расчёта %';
+    hint.style.color = 'var(--text-3)';
+  }
+}
+
+function saveClient() {
+  if (activeClientIdx === null) { saveNewClient(); return; }
+  const c = CLIENTS[activeClientIdx];
+  const prevMgr = c.mgr;
+  c.name    = document.getElementById('f-name').value.trim() || c.name;
+  c.mgr     = document.getElementById('f-mgr').value;
+  c.phone   = document.getElementById('f-phone').value.trim();
+  c.sum     = parseFloat(document.getElementById('f-sum').value) || 0;
+  c.obj     = document.getElementById('f-obj').value.trim() || '?';
+  c.crm     = document.getElementById('f-crm').value.trim();
+  c.stage   = document.getElementById('f-stage').value;
+  // Синхронизация менеджера с AmoCRM если изменился
+  if (c.mgr !== prevMgr && c.crmId) {
+    syncMgrToAmoCRM(c.crmId, c.mgr);
+  }
+  c.prio    = document.getElementById('f-prio').value;
+  c.status  = document.getElementById('f-status').value;
+  c.dealDate   = document.getElementById('f-deal-date')?.value.trim() || c.dealDate || '';
+  c.osDate     = document.getElementById('f-osdate').value.trim();
+  c.osTime     = document.getElementById('f-ostime').value.trim();
+  c.comment    = document.getElementById('f-comment').value.trim();
+  const cs = parseFloat(document.getElementById('f-closed-sum')?.value);
+  const cm = parseFloat(document.getElementById('f-commission')?.value);
+  if (!isNaN(cs) && cs > 0) c.closedSum = cs;
+  if (!isNaN(cm) && cm > 0) c.commission = cm;
+
+  document.getElementById('drawer-title').textContent = c.name;
+  saveToServer();
+  updateBadges();
+  render();
+  showToast('Сохранено ✓');
+}
+
+function markLost() {
+  if (activeClientIdx === null) return;
+  const c = CLIENTS[activeClientIdx];
+  document.getElementById('lost-modal-name').textContent = c.name;
+  document.querySelectorAll('.lost-reason-opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('lost-reason-hidden').value = '';
+  document.getElementById('lost-comment-input').value = '';
+  document.getElementById('lost-modal').classList.add('open');
+}
+
+function closeLostModal() {
+  document.getElementById('lost-modal').classList.remove('open');
+}
+
+function selectLostReason(el, key) {
+  document.querySelectorAll('.lost-reason-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('lost-reason-hidden').value = key;
+}
+
+function confirmLost() {
+  if (activeClientIdx === null) return;
+  const reason = document.getElementById('lost-reason-hidden').value;
+  if (!reason) { document.getElementById('lost-reason-err').style.display = 'block'; return; }
+  document.getElementById('lost-reason-err').style.display = 'none';
+  const comment = document.getElementById('lost-comment-input').value.trim();
+  const c = CLIENTS[activeClientIdx];
+  const today = new Date().toLocaleDateString('ru-RU');
+  LOST.push({ name: c.name, mgr: c.mgr, sum: c.sum, stage: c.stage, reason, comment, date: today });
+  CLIENTS.splice(activeClientIdx, 1);
+  saveToServer();
+  closeLostModal();
+  closeDrawer();
+  updateBadges();
+  render();
+  showToast('Клиент перемещён в потерянные');
+}
+
+function closeDeal() {
+  if (activeClientIdx === null) return;
+  const c = CLIENTS[activeClientIdx];
+  const today = new Date().toLocaleDateString('ru-RU');
+  const closedSum = parseFloat(document.getElementById('f-closed-sum')?.value) || c.closedSum || c.sum || 0;
+  const commission = parseFloat(document.getElementById('f-commission')?.value) || c.commission || 0;
+  CLOSED.push({
+    name: c.name, mgr: c.mgr, sum: closedSum, obj: c.obj,
+    commission, date: today, dealDate: c.dealDate || today,
+    comment: c.comment || '', stage: c.stage, crm: c.crm || ''
+  });
+  CLIENTS.splice(activeClientIdx, 1);
+  saveToServer();
+  closeDrawer();
+  updateBadges();
+  render();
+  showToast('Сделка зафиксирована ✅');
+}
+
+let closedPeriodDays = null;
+
+function setClosedPeriod(days, el) {
+  closedPeriodDays = days;
+  document.querySelectorAll('.closed-period-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderClosed();
+}
+
+function renderClosed() {
+  const cutoff = closedPeriodDays ? (() => { const d = new Date(2026,8,4); d.setDate(d.getDate() - closedPeriodDays); return d; })() : null;
+  const filtered = cutoff ? CLOSED.filter(c => { const d = parseDate(c.date); return d && d >= cutoff; }) : CLOSED;
+
+  const totalSum = filtered.reduce((s,c) => s + (c.sum||0), 0);
+  const totalComm = filtered.reduce((s,c) => s + (c.commission||0), 0);
+
+  const periods = [
+    { label:'7 дней', days:7 }, { label:'14 дней', days:14 },
+    { label:'Месяц', days:30 }, { label:'Квартал', days:90 },
+    { label:'Год', days:365 }, { label:'Всё время', days:null }
+  ];
+  const periodBtns = periods.map(p => `
+    <button class="closed-period-btn mgr-period-btn${closedPeriodDays === p.days ? ' active' : ''}"
+      onclick="setClosedPeriod(${p.days === null ? 'null' : p.days}, this)">${p.label}</button>`).join('');
+
+  const rows = filtered.map(c => `
+    <tr class="lost-row">
+      <td style="padding:10px 12px;font-weight:600">${c.name}</td>
+      <td style="padding:10px 8px;color:var(--text-2)">${c.mgr}</td>
+      <td style="padding:10px 8px">${c.obj && c.obj !== '?' ? c.obj : '—'}</td>
+      <td style="padding:10px 8px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--green)">${c.sum ? c.sum+' млн' : '—'}</td>
+      <td style="padding:10px 8px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--purple)">${c.commission ? (c.commission/1000).toFixed(0)+' тыс ₽' : '—'}</td>
+      <td style="padding:10px 8px;color:var(--text-3)">${c.date}</td>
+      <td style="padding:10px 8px">${c.comment ? `<span style="font-size:11px;color:var(--text-2)">${c.comment}</span>` : '—'}</td>
+    </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-3)">${CLOSED.length ? 'Нет сделок за выбранный период' : 'Нет закрытых сделок'}</td></tr>`;
+
+  document.getElementById('tab-closed').innerHTML = `
+  <div class="period-bar" style="margin-bottom:16px">${periodBtns}</div>
+  <div style="display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap">
+    <div class="lost-tile"><div class="lost-val" style="color:var(--green)">${filtered.length}</div><div class="lost-lbl">Закрытых сделок</div></div>
+    <div class="lost-tile"><div class="lost-val" style="color:var(--green)">${totalSum.toFixed(1)} млн</div><div class="lost-lbl">Общая сумма</div></div>
+    <div class="lost-tile"><div class="lost-val" style="color:var(--purple)">${(totalComm/1000).toFixed(0)} тыс ₽</div><div class="lost-lbl">Комиссия итого</div></div>
+  </div>
+  <div class="table-wrap"><div class="tbl-scroll">
+    <table class="lost-table">
+      <thead><tr>
+        <th>Клиент</th><th>Менеджер</th><th>Объект</th>
+        <th>Сумма</th><th>Комиссия</th><th>Дата</th><th>Комментарий</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div></div>`;
+}
+
+function toggleImportant() {
+  if (activeClientIdx === null) return;
+  const c = CLIENTS[activeClientIdx];
+  c.important = !c.important;
+  const btn = document.getElementById('btn-important');
+  btn.classList.toggle('active', c.important);
+  btn.textContent = c.important ? '⚡ В важных' : '⚡ Важный';
+  updateBadges();
+  showToast(c.important ? '⚡ Добавлен в важные' : 'Убран из важных');
+}
+
+function renderImportant() {
+  const list = CLIENTS.map((c,i) => ({...c, _idx:i})).filter(c => c.important);
+  const cards = list.length === 0
+    ? `<div class="empty"><div class="empty-icon">⚡</div>Нет клиентов в важных</div>`
+    : list.map(c => {
+        const cfg = STAGE[c.stage] || { cls:'b-gray', dc:'dc-gray' };
+        const days = daysSince(c.stageStart);
+        return `
+        <div class="deal-card ${cfg.dc}" style="border-left:3px solid var(--amber)" onclick="openDrawer(${c._idx})">
+          <div class="dc-top">
+            <div>
+              <div class="dc-name">⚡ ${c.name}</div>
+              <div class="dc-mgr">${c.mgr}</div>
+            </div>
+            <div class="dc-budget" style="color:var(--amber)">${c.sum ? c.sum+'млн' : '—'}</div>
+          </div>
+          <div class="dc-foot">
+            <span class="badge ${cfg.cls}">${c.stage}</span>
+            ${days !== null ? `<span style="font-size:10.5px;color:var(--text-3)">${days} дн.</span>` : ''}
+            ${c.obj && c.obj !== '?' ? `<span style="font-size:10.5px;color:var(--text-3)">· ${c.obj}</span>` : ''}
+          </div>
+          ${c.comment ? `<div class="dc-comment">${c.comment}</div>` : ''}
+        </div>`;
+      }).join('');
+
+  document.getElementById('tab-important').innerHTML = `
+  <div class="sec-head" style="margin-bottom:14px">
+    <div class="sec-title">⚡ Важные <span class="sec-count">${list.length} клиентов</span></div>
+    <span style="font-size:12px;color:var(--text-3)">Нужна обратная связь сегодня</span>
+  </div>
+  <div class="hot-grid">${cards}</div>`;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ─── Theme toggle ─── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const isLight = html.dataset.theme === 'light';
+  html.dataset.theme = isLight ? 'dark' : 'light';
+  document.getElementById('theme-btn').textContent = isLight ? '☀' : '🌙';
+  try { localStorage.setItem('ae-theme', html.dataset.theme); } catch(e) {}
+}
+
+/* ─── Init ─── */
+try {
+  const saved = localStorage.getItem('ae-theme');
+  if (saved) {
+    document.documentElement.dataset.theme = saved;
+    document.getElementById('theme-btn').textContent = saved === 'light' ? '🌙' : '☀';
+  }
+} catch(e) {}
+loadFromServer().then(() => { updateBadges(); render(); });
+</script>
+
+<!-- Модал: история потерянного клиента -->
+<div class="lost-modal-overlay" id="lost-history-modal" onclick="if(event.target===this)closeLostHistory()" style="align-items:flex-start;padding-top:40px">
+  <div class="lost-modal-box" style="max-width:560px;max-height:82vh;overflow-y:auto">
+    <div class="lost-modal-head">
+      <div>
+        <div style="font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Потерянный клиент</div>
+        <div class="lost-modal-title" style="color:var(--text)" id="lh-name"></div>
+      </div>
+      <button class="drawer-close" onclick="closeLostHistory()">✕</button>
+    </div>
+    <div id="lh-body"></div>
+  </div>
+</div>
+
+<!-- Модал: аналитика менеджера -->
+<div class="lost-modal-overlay" id="mgr-analytics-modal" onclick="if(event.target===this)closeMgrAnalytics()" style="align-items:flex-start;padding-top:40px">
+  <div class="lost-modal-box" style="max-width:560px;max-height:80vh;overflow-y:auto">
+    <div class="lost-modal-head">
+      <div>
+        <div style="font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Менеджер</div>
+        <div class="lost-modal-title" style="color:var(--text)" id="mgr-an-title"></div>
+      </div>
+      <button class="drawer-close" onclick="closeMgrAnalytics()">✕</button>
+    </div>
+    <div class="an-periods">
+      <button class="mgr-an-period an-period active" onclick="setMgrAnalyticsPeriod(7,this)">7 дней</button>
+      <button class="mgr-an-period an-period" onclick="setMgrAnalyticsPeriod(14,this)">14 дней</button>
+      <button class="mgr-an-period an-period" onclick="setMgrAnalyticsPeriod(30,this)">Месяц</button>
+      <button class="mgr-an-period an-period" onclick="setMgrAnalyticsPeriod(90,this)">Квартал</button>
+      <button class="mgr-an-period an-period" onclick="setMgrAnalyticsPeriod(0,this)">Всё время</button>
+    </div>
+    <div id="mgr-analytics-body"></div>
+  </div>
+</div>
+
+<!-- Модал: аналитика периода -->
+<div class="lost-modal-overlay" id="analytics-modal" onclick="if(event.target===this)closeAnalyticsModal()" style="align-items:flex-start;padding-top:40px">
+  <div class="lost-modal-box" style="max-width:640px;max-height:80vh;overflow-y:auto">
+    <div class="lost-modal-head">
+      <div class="lost-modal-title" style="color:var(--blue)">📊 Аналитика воронки</div>
+      <button class="drawer-close" onclick="closeAnalyticsModal()">✕</button>
+    </div>
+    <div class="an-periods">
+      <button class="an-period active" onclick="setAnalyticsPeriod(3,this)">3 дня</button>
+      <button class="an-period" onclick="setAnalyticsPeriod(7,this)">7 дней</button>
+      <button class="an-period" onclick="setAnalyticsPeriod(30,this)">Месяц</button>
+      <button class="an-period" onclick="setAnalyticsPeriod(0,this)">Всё время</button>
+    </div>
+    <div id="analytics-body"></div>
+  </div>
+</div>
+
+<!-- Модал: новый менеджер -->
+<div class="lost-modal-overlay" id="add-mgr-modal" onclick="if(event.target===this)closeAddManagerModal()">
+  <div class="lost-modal-box" style="max-width:400px">
+    <div class="lost-modal-head">
+      <div class="lost-modal-title" style="color:var(--blue)">Новый менеджер</div>
+      <button class="drawer-close" onclick="closeAddManagerModal()">✕</button>
+    </div>
+    <div class="lost-modal-label" style="margin-top:12px">Имя менеджера <span style="color:var(--red)">*</span></div>
+    <input class="field-input" id="new-mgr-name" placeholder="Например: ИВАН или Мария Иванова"
+      style="margin-bottom:4px" onkeydown="if(event.key==='Enter')confirmAddManager()">
+    <div class="lost-reason-err" id="new-mgr-err" style="display:none">Введите имя</div>
+    <div class="lost-modal-footer" style="margin-top:20px">
+      <button class="lost-modal-cancel" onclick="closeAddManagerModal()">Отмена</button>
+      <button class="lost-modal-confirm" style="background:var(--blue)" onclick="confirmAddManager()">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модал: причина потери клиента -->
+<div class="lost-modal-overlay" id="lost-modal" onclick="if(event.target===this)closeLostModal()">
+  <div class="lost-modal-box">
+    <div class="lost-modal-head">
+      <div class="lost-modal-title">Клиент отвалился</div>
+      <button class="drawer-close" onclick="closeLostModal()">✕</button>
+    </div>
+    <div class="lost-modal-client" id="lost-modal-name"></div>
+
+    <div class="lost-modal-label">Причина потери <span style="color:var(--red)">*</span></div>
+    <div class="lost-reasons-grid">
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Не выходит на связь')">📵 Не выходит на связь</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Купил с другим агентством')">🏢 Купил с другим агентством</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Не устроила цена')">💸 Не устроила цена</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Не подошли условия')">📋 Не подошли условия</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Отложил покупку на неопределённый срок')">⏳ Отложил покупку на неопределённый срок</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Не одобрили ипотеку')">🏦 Не одобрили ипотеку</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Не понравились предложенные объекты')">🏗 Не понравились предложенные объекты</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Нет подходящего лота')">🔍 Нет подходящего лота</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Личные обстоятельства')">👤 Личные обстоятельства</div>
+      <div class="lost-reason-opt" onclick="selectLostReason(this,'Другое')">· Другое</div>
+    </div>
+    <div class="lost-reason-err" id="lost-reason-err" style="display:none">Выберите причину</div>
+    <input type="hidden" id="lost-reason-hidden">
+
+    <div class="lost-modal-label" style="margin-top:14px">Комментарий</div>
+    <textarea class="field-textarea" id="lost-comment-input" placeholder="Что произошло? Детали, нюансы…" style="height:80px"></textarea>
+
+    <div class="lost-modal-footer">
+      <button class="lost-modal-cancel" onclick="closeLostModal()">Отмена</button>
+      <button class="lost-modal-confirm" onclick="confirmLost()">Перевести в потерянные</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
