@@ -266,6 +266,134 @@ app.get('/api/lead/:id', async (req, res) => {
   }
 });
 
+// ── Google Calendar ──────────────────────────────────────────────────────────
+const { google } = require('googleapis');
+const TOKENS_FILE = '/root/dashboard/google-tokens.json';
+const TOKENS_ROP_FILE = '/root/dashboard/google-tokens-rop.json';
+
+function getGoogleCreds() {
+  try {
+    return JSON.parse(fs.readFileSync('/root/dashboard/google-creds.json', 'utf8'));
+  } catch(e) { return {}; }
+}
+
+function getOAuth2Client(redirectPath = '/auth/callback') {
+  const creds = getGoogleCreds();
+  return new google.auth.OAuth2(
+    creds.client_id || process.env.GOOGLE_CLIENT_ID,
+    creds.client_secret || process.env.GOOGLE_CLIENT_SECRET,
+    'http://localhost:3000' + redirectPath
+  );
+}
+
+function loadTokens() {
+  try { return JSON.parse(fs.readFileSync(TOKENS_FILE, 'utf8')); }
+  catch(e) { return null; }
+}
+
+function saveTokens(tokens) {
+  fs.writeFileSync(TOKENS_FILE, JSON.stringify(tokens, null, 2));
+}
+
+// Step 1: redirect to Google consent screen
+app.get('/auth/google', (req, res) => {
+  const auth = getOAuth2Client();
+  const url = auth.generateAuthUrl({
+    access_type: 'offline',
+    prompt: 'consent',
+    scope: ['https://www.googleapis.com/auth/calendar'],
+  });
+  res.redirect(url);
+});
+
+// Step 2: Google redirects here with ?code=... (owner)
+app.get('/auth/callback', async (req, res) => {
+  const { code } = req.query;
+  if (!code) return res.status(400).send('No code');
+  try {
+    const auth = getOAuth2Client('/auth/callback');
+    const { tokens } = await auth.getToken(code);
+    saveTokens(tokens);
+    res.send('<h2>✅ Google Calendar авторизован! Можно закрыть эту страницу.</h2>');
+  } catch(e) {
+    res.status(500).send('Auth error: ' + e.message);
+  }
+});
+
+// РОП auth
+app.get('/auth/google/rop', (req, res) => {
+  const auth = getOAuth2Client('/auth/callback/rop');
+  const url = auth.generateAuthUrl({
+    access_type: 'offline',
+    prompt: 'consent',
+    scope: ['https://www.googleapis.com/auth/calendar'],
+  });
+  res.redirect(url);
+});
+
+app.get('/auth/callback/rop', async (req, res) => {
+  const { code } = req.query;
+  if (!code) return res.status(400).send('No code');
+  try {
+    const auth = getOAuth2Client('/auth/callback/rop');
+    const { tokens } = await auth.getToken(code);
+    fs.writeFileSync(TOKENS_ROP_FILE, JSON.stringify(tokens, null, 2));
+    res.send('<h2>✅ Календарь РОПа авторизован! Можно закрыть эту страницу.</h2>');
+  } catch(e) {
+    res.status(500).send('Auth error: ' + e.message);
+  }
+});
+
+// POST /api/calendar/event — create event
+// body: { title, date, calendarId, description }
+app.post('/api/calendar/event', async (req, res) => {
+  const { title, date, calendarId = 'primary', description = '', attendees = '', ropOnly = false, colorId } = req.body;
+  if (!title || !date) return res.status(400).json({ error: 'title and date required' });
+
+  let tokens = loadTokens();
+  let tokenFile = TOKENS_FILE;
+  if (ropOnly) {
+    try {
+      const ropTok = JSON.parse(fs.readFileSync(TOKENS_ROP_FILE, 'utf8'));
+      if (ropTok) { tokens = ropTok; tokenFile = TOKENS_ROP_FILE; }
+    } catch(e) { /* fallback to owner tokens */ }
+  }
+  if (!tokens) return res.status(401).json({ error: 'Not authorized. Visit /auth/google first.' });
+
+  try {
+    const auth = getOAuth2Client();
+    auth.setCredentials(tokens);
+    auth.on('tokens', (newTokens) => {
+      if (newTokens.refresh_token) {
+        const merged = { ...tokens, ...newTokens };
+        fs.writeFileSync(tokenFile, JSON.stringify(merged, null, 2));
+      }
+    });
+
+    const calendar = google.calendar({ version: 'v3', auth });
+    const event = {
+      summary: title,
+      description,
+      start: { date },
+      end: { date },
+      ...(colorId && { colorId }),
+    };
+    if (attendees) {
+      event.attendees = attendees.split(',').map(e => ({ email: e.trim() })).filter(a => a.email);
+    }
+    const result = await calendar.events.insert({
+      calendarId,
+      resource: event,
+      sendUpdates: 'all',
+    });
+
+    res.json({ ok: true, eventId: result.data.id, link: result.data.htmlLink });
+  } catch(e) {
+    console.error('Calendar error:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.use(require('express').static('/root/dashboard'));
 
 const PORT = process.env.PORT || 3000;

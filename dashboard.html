@@ -2247,6 +2247,8 @@ function saveClient() {
   }
   c.prio    = document.getElementById('f-prio').value;
   c.status  = document.getElementById('f-status').value;
+  const prevDealDate = c.dealDate;
+  const prevOsDate = c.osDate;
   c.dealDate   = document.getElementById('f-deal-date')?.value.trim() || c.dealDate || '';
   c.osDate     = document.getElementById('f-osdate').value.trim();
   c.osTime     = document.getElementById('f-ostime').value.trim();
@@ -2256,11 +2258,53 @@ function saveClient() {
   if (!isNaN(cs) && cs > 0) c.closedSum = cs;
   if (!isNaN(cm) && cm > 0) c.commission = cm;
 
+  // Google Calendar: создать событие при изменении дат
+  if (c.dealDate && c.dealDate !== prevDealDate) {
+    // Дата сделки → только мне (владельцу)
+    createCalendarEvent({
+      title: `📋 Сделка: ${c.name}`,
+      date: c.dealDate,
+      description: `Объект: ${c.obj || ''}\nМенеджер: ${c.mgr || ''}\nСумма: ${c.sum || ''} млн`,
+      calendarId: 'primary',
+      colorId: '2'
+    });
+  }
+  if (c.osDate && c.osDate !== prevOsDate) {
+    // Дата ОС → только РОПу (приглашение на почту)
+    createCalendarEvent({
+      title: `🏠 ОС: ${c.name}`,
+      date: c.osDate,
+      description: `Объект: ${c.obj || ''}\nМенеджер: ${c.mgr || ''}\nВремя: ${c.osTime || ''}`,
+      calendarId: 'primary',
+      attendees: 'Svatgrom@gmail.com',
+      ropOnly: true
+    });
+  }
+
   document.getElementById('drawer-title').textContent = c.name;
   saveToServer();
   updateBadges();
   render();
   showToast('Сохранено ✓');
+}
+
+async function createCalendarEvent({ title, date, description, calendarId, attendees, ropOnly, colorId }) {
+  try {
+    const body = { title, date, description, calendarId };
+    if (attendees) body.attendees = attendees;
+    if (ropOnly) body.ropOnly = ropOnly;
+    if (colorId) body.colorId = colorId;
+    const r = await fetch(AMO_PROXY + '/api/calendar/event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+    if (d.ok) showToast('📅 Событие добавлено в календарь');
+    else console.warn('Calendar error:', d.error);
+  } catch(e) {
+    console.warn('Calendar fetch error:', e);
+  }
 }
 
 function markLost() {
