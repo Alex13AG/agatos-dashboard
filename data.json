@@ -1,22 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Дмитрий Ефремов",
-      "name": "Алла",
-      "phone": "+79265377490",
-      "sum": 25903020,
-      "obj": "Инди тауэрс",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26812067",
-      "crmId": "26812067",
-      "stage": "Закрытая сделка",
-      "stageStart": "14.09.2026",
-      "prio": "",
-      "status": "🟡 В работе",
-      "osDate": "",
-      "osTime": "",
-      "comment": ""
-    },
-    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
@@ -930,6 +914,18 @@
       "comment": "",
       "stage": "Закрытая сделка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26844191"
+    },
+    {
+      "name": "Алла",
+      "mgr": "Дмитрий Ефремов",
+      "sum": 25903020,
+      "obj": "Инди тауэрс",
+      "commission": 0,
+      "date": "14.09.2026",
+      "dealDate": "14.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26812067"
     }
   ]
 }
