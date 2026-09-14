@@ -1,22 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Денис Михалев",
-      "name": "Светлана",
-      "phone": "79082212828",
-      "sum": 27907630,
-      "obj": "Сити бэй",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26750177",
-      "crmId": "26750177",
-      "stage": "Закрытая сделка",
-      "stageStart": "14.09.2026",
-      "prio": "НА КОНТРОЛЕ",
-      "status": "🟢 Закрывается",
-      "osDate": "",
-      "osTime": "",
-      "comment": ""
-    },
-    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
@@ -942,6 +926,18 @@
       "comment": "",
       "stage": "Закрытая сделка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26812067"
+    },
+    {
+      "name": "Светлана",
+      "mgr": "Денис Михалев",
+      "sum": 27907630,
+      "obj": "Сити бэй",
+      "commission": 0,
+      "date": "14.09.2026",
+      "dealDate": "14.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26750177"
     }
   ]
 }
