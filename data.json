@@ -1,6 +1,22 @@
 {
   "clients": [
     {
+      "mgr": "Алина Тешаева",
+      "name": "Владими р",
+      "phone": "79958852522",
+      "sum": 54463517,
+      "obj": "Шагал",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26707039",
+      "crmId": "26707039",
+      "stage": "Закрытая сделка",
+      "stageStart": "14.09.2026",
+      "prio": "НА КОНТРОЛЕ",
+      "status": "🟢 Закрывается",
+      "osDate": "",
+      "osTime": "",
+      "comment": ""
+    },
+    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
