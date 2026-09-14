@@ -1,23 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Алина Тешаева",
-      "name": "Василий",
-      "phone": "+7 923 020 0004",
-      "sum": 20859811,
-      "obj": "Северный порт",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26985047",
-      "crmId": "26985047",
-      "stage": "Закрытая сделка",
-      "stageStart": "14.09.2026",
-      "prio": "",
-      "status": "🟡 В работе",
-      "osDate": "",
-      "osTime": "",
-      "comment": "",
-      "dealDate": ""
-    },
-    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
@@ -310,22 +293,6 @@
       "osDate": "2026-09-16",
       "osTime": "",
       "comment": "принемает решение муж и дает денег тоже, организовать показ на моментс"
-    },
-    {
-      "mgr": "Георгий Сагдетдинов",
-      "name": "Шагал",
-      "phone": "79055214878",
-      "sum": 43.7,
-      "obj": "Шагал",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26844191",
-      "crmId": "26844191",
-      "stage": "Закрытая сделка",
-      "stageStart": "14.09.2026",
-      "prio": "",
-      "status": "🟢 Закрывается",
-      "osDate": "",
-      "osTime": "",
-      "comment": ""
     },
     {
       "mgr": "Владислав Соколов",
@@ -923,5 +890,30 @@
     "Дмитрий Ефремов",
     "Михаил Гаршев"
   ],
-  "closed": []
+  "closed": [
+    {
+      "name": "Василий",
+      "mgr": "Алина Тешаева",
+      "sum": 20859811,
+      "obj": "Северный порт",
+      "commission": 0,
+      "date": "14.09.2026",
+      "dealDate": "14.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26985047"
+    },
+    {
+      "name": "Шагал",
+      "mgr": "Георгий Сагдетдинов",
+      "sum": 43.7,
+      "obj": "Шагал",
+      "commission": 0,
+      "date": "14.09.2026",
+      "dealDate": "14.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26844191"
+    }
+  ]
 }
