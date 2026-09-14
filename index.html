@@ -2453,6 +2453,14 @@ function openClosedModal(idx) {
   document.getElementById('closed-edit-info').textContent = c.mgr + '  ·  ' + (c.obj||'') + '  ·  ' + c.date;
   document.getElementById('closed-edit-sum').value = c.sum || '';
   document.getElementById('closed-edit-commission').value = c.commission || '';
+  const crmWrap = document.getElementById('closed-edit-crm-wrap');
+  const crmLink = document.getElementById('closed-edit-crm-link');
+  if (c.crm) {
+    crmLink.href = c.crm;
+    crmWrap.style.display = '';
+  } else {
+    crmWrap.style.display = 'none';
+  }
   document.getElementById('closed-edit-modal').classList.add('open');
 }
 function closeClosedModal() {
