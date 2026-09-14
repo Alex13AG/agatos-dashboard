@@ -2420,7 +2420,8 @@ function renderClosed() {
       <td style="padding:10px 8px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--purple)">${c.commission ? (c.commission/1000).toFixed(0)+' тыс ₽' : '—'}</td>
       <td style="padding:10px 8px;color:var(--text-3)">${c.date}</td>
       <td style="padding:10px 8px">${c.comment ? `<span style="font-size:11px;color:var(--text-2)">${c.comment}</span>` : '—'}</td>
-    </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-3)">${CLOSED.length ? 'Нет сделок за выбранный период' : 'Нет закрытых сделок'}</td></tr>`;
+    </tr>`;
+  }).join('') || `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-3)">${CLOSED.length ? 'Нет сделок за выбранный период' : 'Нет закрытых сделок'}</td></tr>`;
 
   document.getElementById('tab-closed').innerHTML = `
   <div class="period-bar" style="margin-bottom:16px">${periodBtns}</div>
