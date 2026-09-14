@@ -1546,10 +1546,13 @@ function renderManagers() {
     s.commission += (c.commission || 0);
   });
 
-  const sorted = Object.entries(stats).sort((a,b) =>
-    (b[1].closed + b[1].deal*0.9 + b[1].bron*0.7 + b[1].hot*0.4) -
-    (a[1].closed + a[1].deal*0.9 + a[1].bron*0.7 + a[1].hot*0.4)
-  );
+  const sorted = Object.entries(stats).sort((a,b) => {
+    const [,as] = a, [,bs] = b;
+    if (bs.closed !== as.closed) return bs.closed - as.closed;
+    if (bs.closedSum !== as.closedSum) return bs.closedSum - as.closedSum;
+    return (bs.deal*0.9 + bs.bron*0.7 + bs.hot*0.4 + bs.commission*0.0001) -
+           (as.deal*0.9 + as.bron*0.7 + as.hot*0.4 + as.commission*0.0001);
+  });
 
   const medals = ['🥇','🥈','🥉'];
 
