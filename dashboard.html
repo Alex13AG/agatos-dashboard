@@ -2409,8 +2409,10 @@ function renderClosed() {
     <button class="closed-period-btn mgr-period-btn${closedPeriodDays === p.days ? ' active' : ''}"
       onclick="setClosedPeriod(${p.days === null ? 'null' : p.days}, this)">${p.label}</button>`).join('');
 
-  const rows = filtered.map(c => `
-    <tr class="lost-row">
+  const rows = filtered.map((c, fi) => {
+    const realIdx = CLOSED.indexOf(c);
+    return `
+    <tr class="lost-row" style="cursor:pointer" onclick="openClosedModal(${realIdx})">
       <td style="padding:10px 12px;font-weight:600">${c.name}</td>
       <td style="padding:10px 8px;color:var(--text-2)">${c.mgr}</td>
       <td style="padding:10px 8px">${c.obj && c.obj !== '?' ? c.obj : '—'}</td>
@@ -2438,6 +2440,36 @@ function renderClosed() {
   </div></div>`;
 }
 
+let _closedEditIdx = null;
+function openClosedModal(idx) {
+  _closedEditIdx = idx;
+  const c = CLOSED[idx];
+  if (!c) return;
+  document.getElementById('closed-edit-name').textContent = c.name;
+  document.getElementById('closed-edit-info').textContent = c.mgr + '  ·  ' + (c.obj||'') + '  ·  ' + c.date;
+  document.getElementById('closed-edit-sum').value = c.sum || '';
+  document.getElementById('closed-edit-commission').value = c.commission || '';
+  document.getElementById('closed-edit-modal').classList.add('open');
+}
+function closeClosedModal() {
+  document.getElementById('closed-edit-modal').classList.remove('open');
+  _closedEditIdx = null;
+}
+function saveClosedEdit() {
+  if (_closedEditIdx === null) return;
+  const c = CLOSED[_closedEditIdx];
+  const sum = parseFloat(document.getElementById('closed-edit-sum').value);
+  const commission = parseFloat(document.getElementById('closed-edit-commission').value);
+  if (!isNaN(sum)) c.sum = sum;
+  if (!isNaN(commission)) c.commission = commission;
+  closeClosedModal();
+  fetch(AMO_PROXY + '/api/data', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ clients: CLIENTS, lost: LOST, managers: MANAGERS, closed: CLOSED })
+  }).catch(e => console.warn('Save error:', e));
+  renderClosed();
+  showToast('Данные обновлены ✅');
+}
 function toggleImportant() {
   if (activeClientIdx === null) return;
   const c = CLIENTS[activeClientIdx];
@@ -2614,5 +2646,22 @@ loadFromServer().then(() => { updateBadges(); render(); });
   </div>
 </div>
 
+<div class="lost-modal-overlay" id="closed-edit-modal" onclick="if(event.target===this)closeClosedModal()">
+  <div class="lost-modal-box" style="max-width:420px">
+    <div class="lost-modal-head">
+      <div class="lost-modal-title" id="closed-edit-name"></div>
+      <button class="drawer-close" onclick="closeClosedModal()">✕</button>
+    </div>
+    <div id="closed-edit-info" style="font-size:13px;color:var(--text-2);margin-bottom:16px"></div>
+    <div class="lost-modal-label">Сумма сделки (млн ₽)</div>
+    <input class="field-input" type="number" id="closed-edit-sum" step="0.1" placeholder="0.0" style="margin-bottom:14px;width:100%">
+    <div class="lost-modal-label">Комиссия (₽)</div>
+    <input class="field-input" type="number" id="closed-edit-commission" step="1000" placeholder="0" style="width:100%">
+    <div class="lost-modal-footer" style="margin-top:20px">
+      <button class="lost-modal-cancel" onclick="closeClosedModal()">Отмена</button>
+      <button class="lost-modal-confirm" onclick="saveClosedEdit()">Сохранить</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
