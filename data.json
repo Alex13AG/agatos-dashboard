@@ -1,22 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Владислав Дорофеев",
-      "name": "Владимир",
-      "phone": "+7 (982) 194-24-27",
-      "sum": 31969907,
-      "obj": "Твелв",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26704649",
-      "crmId": "26704649",
-      "stage": "Закрытая сделка",
-      "stageStart": "15.09.2026",
-      "prio": "",
-      "status": "🟡 В работе",
-      "osDate": "2026-09-01",
-      "osTime": "",
-      "comment": ""
-    },
-    {
       "mgr": "Денис Михалев",
       "name": "Екатерина",
       "phone": "79057666242",
@@ -1002,6 +986,18 @@
       "comment": "",
       "stage": "Закрытая сделка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26785115"
+    },
+    {
+      "name": "Владимир",
+      "mgr": "Владислав Дорофеев",
+      "sum": 31969907,
+      "obj": "Твелв",
+      "commission": 0,
+      "date": "15.09.2026",
+      "dealDate": "15.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26704649"
     }
   ]
 }
