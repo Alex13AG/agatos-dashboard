@@ -1,22 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Денис Михалев",
-      "name": "Преображенская площадь",
-      "phone": "+79850058862",
-      "sum": 28620008,
-      "obj": "ЖК «Алиа»",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26785115",
-      "crmId": "26785115",
-      "stage": "Закрытая сделка",
-      "stageStart": "15.09.2026",
-      "prio": "",
-      "status": "🟡 В работе",
-      "osDate": "",
-      "osTime": "",
-      "comment": ""
-    },
-    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
@@ -966,6 +950,18 @@
       "comment": "",
       "stage": "Закрытая сделка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26707039"
+    },
+    {
+      "name": "Преображенская площадь",
+      "mgr": "Денис Михалев",
+      "sum": 28620008,
+      "obj": "ЖК «Алиа»",
+      "commission": 0,
+      "date": "15.09.2026",
+      "dealDate": "15.09.2026",
+      "comment": "",
+      "stage": "Закрытая сделка",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26785115"
     }
   ]
 }
