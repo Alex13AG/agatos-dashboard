@@ -615,23 +615,6 @@
       "important": true
     },
     {
-      "mgr": "Артем Легай",
-      "name": "Невен",
-      "phone": "79151259517",
-      "sum": 20069882,
-      "obj": "Инджой",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26250777",
-      "crmId": "26250777",
-      "stage": "Выход на сделку",
-      "stageStart": "09.09.2026",
-      "prio": "НА КОНТРОЛЕ",
-      "status": "🟢 Закрывается",
-      "osDate": "2026-09-18",
-      "osTime": "",
-      "comment": "готовят дду подпишем среда или четверг",
-      "dealDate": "2026-09-18"
-    },
-    {
       "mgr": "Георгий Сагдетдинов",
       "name": "Юлия",
       "phone": "89857733831",
@@ -1061,6 +1044,18 @@
       "comment": "",
       "stage": "Закрытая сделка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26704649"
+    },
+    {
+      "name": "Невен",
+      "mgr": "Артем Легай",
+      "sum": 20069882,
+      "obj": "Инджой",
+      "commission": 0,
+      "date": "18.09.2026",
+      "dealDate": "2026-09-18",
+      "comment": "готовят дду подпишем среда или четверг",
+      "stage": "Выход на сделку",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26250777"
     }
   ]
 }
