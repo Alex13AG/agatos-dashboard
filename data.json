@@ -118,23 +118,6 @@
       "dealDate": ""
     },
     {
-      "mgr": "Денис Михалев",
-      "name": "Ольга",
-      "phone": "79165288647",
-      "sum": 25500000,
-      "obj": "Преображенская площадь",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/26620439",
-      "crmId": "26620439",
-      "stage": "Выход на сделку",
-      "stageStart": "15.09.2026",
-      "prio": "НА КОНТРОЛЕ",
-      "status": "🟢 Закрывается",
-      "osDate": "2026-09-21",
-      "osTime": "",
-      "comment": "",
-      "dealDate": "2026-09-21"
-    },
-    {
       "mgr": "Михаил Гаршев",
       "name": "Игорь",
       "phone": "+79150221888",
@@ -1104,6 +1087,18 @@
       "comment": "готовят дду подпишем среда или четверг",
       "stage": "Выход на сделку",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26250777"
+    },
+    {
+      "name": "Ольга",
+      "mgr": "Денис Михалев",
+      "sum": 25500000,
+      "obj": "Преображенская площадь",
+      "commission": 0,
+      "date": "21.09.2026",
+      "dealDate": "2026-09-21",
+      "comment": "",
+      "stage": "Выход на сделку",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/26620439"
     }
   ]
 }
