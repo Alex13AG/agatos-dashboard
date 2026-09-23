@@ -463,14 +463,14 @@
       "obj": "хай лайф",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/25215799",
       "crmId": "25215799",
-      "stage": "Согласование условий",
+      "stage": "Выход на сделку",
       "stageStart": "13.09.2026",
       "prio": "НА КОНТРОЛЕ",
-      "status": "🟡 В работе",
-      "osDate": "2026-09-19",
+      "status": "🟢 Закрывается",
+      "osDate": "",
       "osTime": "",
       "comment": "определяемся с лотом",
-      "dealDate": ""
+      "dealDate": "2026-09-30"
     },
     {
       "mgr": "Елена Кленко",
