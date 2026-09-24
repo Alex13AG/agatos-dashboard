@@ -1,6 +1,22 @@
 {
   "clients": [
     {
+      "mgr": "Мисюра Мария",
+      "name": "1й Южный",
+      "phone": "+79375679000",
+      "sum": 12215148,
+      "obj": "1й Южный",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/27076281",
+      "crmId": "27076281",
+      "stage": "Выход на сделку",
+      "stageStart": "24.09.2026",
+      "prio": "",
+      "status": "🟡 В работе",
+      "osDate": "2026-09-18",
+      "osTime": "",
+      "comment": ""
+    },
+    {
       "mgr": "Георгий Сагдетдинов",
       "name": "Юлия",
       "phone": "+79653454613",
