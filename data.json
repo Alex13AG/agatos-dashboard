@@ -660,24 +660,6 @@
       "dealDate": ""
     },
     {
-      "mgr": "Абдуллаева Амина",
-      "name": "Вадим",
-      "phone": "89856008444",
-      "sum": 99000000,
-      "obj": "Северный порт",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/25472295",
-      "crmId": "25472295",
-      "stage": "Выход на сделку",
-      "stageStart": "09.09.2026",
-      "prio": "ЗАКРЫТО",
-      "status": "🟢 Закрывается",
-      "osDate": "2026-09-24",
-      "osTime": "",
-      "comment": "бронь оплачена поставили сделку на 25е",
-      "dealDate": "2026-09-24",
-      "important": true
-    },
-    {
       "mgr": "Георгий Сагдетдинов",
       "name": "Юлия",
       "phone": "89857733831",
@@ -1151,6 +1133,18 @@
       "comment": "",
       "stage": "Выход на сделку",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/27076281"
+    },
+    {
+      "name": "Вадим",
+      "mgr": "Абдуллаева Амина",
+      "sum": 99000000,
+      "obj": "Северный порт",
+      "commission": 0,
+      "date": "24.09.2026",
+      "dealDate": "2026-09-24",
+      "comment": "бронь оплачена поставили сделку на 25е",
+      "stage": "Выход на сделку",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/25472295"
     }
   ]
 }
