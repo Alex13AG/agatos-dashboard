@@ -1,22 +1,6 @@
 {
   "clients": [
     {
-      "mgr": "Мисюра Мария",
-      "name": "1й Южный",
-      "phone": "+79375679000",
-      "sum": 12215148,
-      "obj": "1й Южный",
-      "crm": "https://agatoestet.amocrm.ru/leads/detail/27076281",
-      "crmId": "27076281",
-      "stage": "Выход на сделку",
-      "stageStart": "24.09.2026",
-      "prio": "",
-      "status": "🟡 В работе",
-      "osDate": "2026-09-18",
-      "osTime": "",
-      "comment": ""
-    },
-    {
       "mgr": "Георгий Сагдетдинов",
       "name": "Юлия",
       "phone": "+79653454613",
@@ -1155,6 +1139,18 @@
       "comment": "ждем паспорт в мвд должны выдать сегодня",
       "stage": "Выход на сделку",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26684345"
+    },
+    {
+      "name": "1й Южный",
+      "mgr": "Мисюра Мария",
+      "sum": 12215148,
+      "obj": "1й Южный",
+      "commission": 0,
+      "date": "24.09.2026",
+      "dealDate": "24.09.2026",
+      "comment": "",
+      "stage": "Выход на сделку",
+      "crm": "https://agatoestet.amocrm.ru/leads/detail/27076281"
     }
   ]
 }
