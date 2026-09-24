@@ -889,14 +889,14 @@
       "obj": "некрасовка",
       "crm": "https://agatoestet.amocrm.ru/leads/detail/26988139",
       "crmId": "26988139",
-      "stage": "Выход на сделку",
+      "stage": "Подготовка документов",
       "stageStart": "08.09.2026",
       "prio": "НА КОНТРОЛЕ",
-      "status": "🟢 Закрывается",
+      "status": "🟡 Горячий",
       "osDate": "2026-09-25",
       "osTime": "",
       "comment": "",
-      "dealDate": "2026-09-25"
+      "dealDate": "2026-10-25"
     },
     {
       "mgr": "Алина Тешаева",
